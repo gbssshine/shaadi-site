@@ -1,7 +1,7 @@
 /* Parrot Tests: the shareable test pages. Loaded after site.css (uses its tokens and buttons).
    No main-site navigation and no dating wording here: the page must stand on its own. */
 body.pt {
-  min-height: 100svh;
+  min-height: calc(var(--vh1, 1svh) * 100);
   background: linear-gradient(180deg, #F7A3A0 0, #FCC9B0 340px, #FFEDE3 720px, var(--milk) 1100px);
   display: flex; flex-direction: column;
 }
@@ -165,15 +165,15 @@ body.pt {
 .pt-main.pt-split { width: min(1180px, 100% - 24px); }
 .pt-side { display: none; }
 .pt-flow { display: grid; gap: 14px; align-content: start; }
-.pt-flow > .pt-card { min-height: calc(100svh - 96px); align-content: center; }
+.pt-flow > .pt-card { min-height: calc(calc(var(--vh1, 1svh) * 100) - 96px); align-content: center; }
 .pt-wide { width: 100%; }
 
 @media (min-width: 960px) {
   .pt-main.pt-split { grid-template-columns: minmax(0, 1fr) 560px; column-gap: 56px; row-gap: 22px; align-items: center; padding-bottom: 40px; }
-  .pt-side { display: grid; gap: 14px; align-content: center; min-height: calc(100svh - 110px); }
+  .pt-side { display: grid; gap: 14px; align-content: center; min-height: calc(calc(var(--vh1, 1svh) * 100) - 110px); }
   .pt-side h2 { font-size: clamp(2.2rem, 1.4rem + 2vw, 3.4rem); line-height: 1.02; }
-  .pt-side-art { width: auto; height: min(34svh, 320px); justify-self: start; filter: drop-shadow(0 14px 18px rgba(160, 50, 60, .25)); }
-  .pt-flow > .pt-card { min-height: min(calc(100svh - 110px), 760px); padding: 28px 28px 30px; }
+  .pt-side-art { width: auto; height: min(calc(var(--vh1, 1svh) * 34), 320px); justify-self: start; filter: drop-shadow(0 14px 18px rgba(160, 50, 60, .25)); }
+  .pt-flow > .pt-card { min-height: min(calc(calc(var(--vh1, 1svh) * 100) - 110px), 760px); padding: 28px 28px 30px; }
   .pt-wide { grid-column: 1 / -1; }
   .pt-section.pt-wide .more-tests { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
   .pt-section.pt-wide .birds-grid { grid-template-columns: repeat(6, 1fr); }
@@ -185,7 +185,7 @@ body.pt {
 .pt-facts dd { margin: 0; color: var(--plum); font-size: .98rem; line-height: 1.5; }
 .pt-side-meta { display: flex; flex-wrap: wrap; gap: 8px; }
 .pt-side-meta span { padding: 7px 12px; border-radius: 99px; background: var(--plum); color: #fff; font-size: .82rem; font-weight: 700; }
-.pt-side-flock { position: relative; height: min(34svh, 320px); }
+.pt-side-flock { position: relative; height: min(calc(var(--vh1, 1svh) * 34), 320px); }
 .pt-side-flock img { position: absolute; bottom: 0; width: auto; filter: drop-shadow(0 10px 12px rgba(122, 38, 60, .2)); }
 .pt-side-flock .s1 { left: 0; height: 56%; }
 .pt-side-flock .s2 { left: 22%; height: 96%; z-index: 2; }
@@ -197,7 +197,7 @@ body.pt {
 /* phones: the test card fills the first screen; lists below keep their natural height */
 @media (max-width: 699px) {
   .pt-main > section, .pt-flow > section { min-height: 0; }
-  .pt-flow > .pt-card { min-height: calc(100svh - 76px); }
+  .pt-flow > .pt-card { min-height: calc(calc(var(--vh1, 1svh) * 100) - 76px); }
   .pt-card .text-link, .pt-app .text-link { padding: 8px 0; }
   .pt-top { padding: 10px 0 4px; }
   .pt-brand span { font-size: 1.25rem; }
@@ -218,8 +218,8 @@ body.pt {
 @media (max-width: 699px) {
   .pt-flow > .pt-card { min-height: 0; padding: 20px 16px 22px; }
   .pt-intro-art { padding: 18px 0; }
-  .pt-intro-art img { height: min(22svh, 170px); }
-  .pt-flock { height: min(28svh, 220px); }
+  .pt-intro-art img { height: min(calc(var(--vh1, 1svh) * 22), 170px); }
+  .pt-flock { height: min(calc(var(--vh1, 1svh) * 28), 220px); }
 }
 .pt-back { min-height: 42px; }
 
