@@ -154,13 +154,6 @@ h3 { font-size: 1.45rem; line-height: 1.1; font-weight: 700; }
 .sp-1 { width: 18px; height: 18px; right: 6%; top: 24%; }
 .sp-2 { width: 12px; height: 12px; left: 32%; top: 4%; }
 
-@media (prefers-reduced-motion: no-preference) {
-  .pol-a { animation: swing-a .9s cubic-bezier(.2, .9, .3, 1.2) .25s both; }
-  .pol-b { animation: swing-b .9s cubic-bezier(.2, .9, .3, 1.2) .4s both; }
-  .couple-heart { animation: pop .6s cubic-bezier(.3, 1.6, .5, 1) 1s both; }
-  .meter-bar i { animation: fill 1.3s cubic-bezier(.3, .7, .2, 1) .9s both; }
-  .pill-match { animation: rise .6s ease-out 1.2s both; }
-  .hero-mithu { animation: rise .7s ease-out .05s both; }
 }
 @keyframes swing-a { from { opacity: 0; transform: translate(-30px, 20px) rotate(-14deg); } }
 @keyframes swing-b { from { opacity: 0; transform: translate(30px, 20px) rotate(14deg); } }
@@ -915,8 +908,8 @@ main > section > .wrap { width: min(1180px, 100% - 32px); }
 /* home hero scales with the screen */
 @media (min-width: 960px) {
   .hero-stage { max-width: none; height: min(64svh, 640px); aspect-ratio: auto; width: 100%; }
-  .hero-title h1 { font-size: clamp(4.6rem, 3rem + 4.6vh, 7rem); }
-  .slogan { font-size: clamp(2rem, 1.2rem + 2.4vh, 3rem); }
+  .hero-title h1 { font-size: clamp(4.6rem, 2rem + 4vw, 7rem); }
+  .slogan { font-size: clamp(2rem, 1rem + 1.6vw, 3rem); }
 }
 
 /* inner page hero: full screen, big art beside the title */
@@ -1152,3 +1145,54 @@ html { font-size: clamp(16px, calc(8px + .55vw), 19.5px); }
 .kicker-ig { display: inline-flex; align-items: center; gap: 6px; }
 .kicker-ig .ic { width: 20px; height: 20px; color: #DD2A7B; }
 .menu-ig .ic { color: #DD2A7B; width: 20px; height: 20px; }
+
+/* =========================================================
+   Stability pass (owner: the site jerks and "teleports" when scrolling up and down).
+   - No looping videos, no entrance animations, no dock that slides with every scroll.
+   - On touch screens a tap counts as hover, so hover effects never move anything.
+   - On phones there are no sideways rails: cards stack and take their own height,
+     so there is no empty space next to a short card and nothing hides off-screen.
+   ========================================================= */
+@media (hover: none) {
+  .btn:hover, .play-badge:hover, .open-test:hover, .nak-grid button:hover, .lib-sec:hover, .tcard:hover { transform: none; }
+  .fate:not(.open):hover .fate-inner, .feature-test:hover .b1, .phone-screen:hover .play-btn { transform: none; }
+}
+@media (max-width: 699px) {
+  /* A day with Mithu: a vertical timeline of cards */
+  .timeline { display: grid; gap: 12px; }
+  .timeline::before, .timeline .moment::after { display: none; }
+  .timeline .moment { display: grid; grid-template-columns: 1fr; gap: 12px; align-content: start; padding: 16px; border-radius: 24px; background: #fff; box-shadow: var(--shadow-soft); }
+  .timeline .moment-copy { text-align: left; justify-items: start; max-width: none; }
+  .timeline .moment-copy > p:not(.time):not(.hint) { font-size: .95rem; }
+  .timeline .moment-art { justify-self: stretch; }
+  .timeline .moment .push, .timeline .moment .why, .timeline .moment .chat { box-shadow: none; padding: 0; max-width: none; }
+  .timeline .moment .chat .chips { display: flex; }
+  .timeline .fates { max-width: none; padding: 12px 10px 14px; }
+  .timeline .fates-mithu { width: 26%; margin-top: -12px; }
+
+  /* How it works (home): compact rows, art on the left */
+  .steps { grid-template-columns: 1fr; gap: 10px; }
+  .steps li { grid-template-columns: 76px 1fr; column-gap: 14px; row-gap: 4px; align-items: center; padding: 14px 16px; }
+  .steps .step-art { grid-row: 1 / span 3; width: 76px; height: auto; margin: 0; }
+  .steps .step-n { width: 28px; height: 28px; margin: 0; font-size: 1rem; }
+  .steps h3 { font-size: 1.12rem; }
+  .steps p { font-size: .9rem; line-height: 1.45; }
+
+  /* Why it feels different: stacked cards */
+  .feat-grid { grid-template-columns: 1fr; gap: 10px; }
+  .feat { padding: 16px; gap: 8px; }
+  .feat-art { width: auto; height: 96px; justify-self: start; margin: 0; }
+  .feat .why, .feat .push { max-width: none; }
+
+  /* cards that used to swipe sideways */
+  .grid-cards, .split, .duo-grid, .extras { grid-template-columns: 1fr; gap: 10px; }
+  section[aria-labelledby="tips-title"] .split { display: grid; grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: 1fr; overflow: visible; margin-inline: 0; padding: 0; scroll-snap-type: none; }
+
+  /* tests: one clear vertical list, "Start" on the right of every row */
+  .tb-grid { grid-auto-flow: row; grid-template-rows: none; grid-template-columns: 1fr; grid-auto-columns: auto; overflow: visible; scroll-snap-type: none; margin-inline: 0; padding: 0; gap: 8px; }
+  .tcard { grid-template-columns: 40px 1fr auto; grid-template-rows: auto auto; column-gap: 12px; align-items: center; padding: 10px 12px; }
+  .tcard img { grid-row: 1 / span 2; width: 40px; height: 40px; }
+  .tcard b { font-size: .98rem; }
+  .tcard em { grid-column: 3; grid-row: 1 / span 2; margin-top: 0; align-self: center; }
+  .tb-chips { mask-image: linear-gradient(90deg, #000 85%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); }
+}

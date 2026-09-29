@@ -25,25 +25,11 @@
   var dock = document.querySelector("[data-dock]");
   var top = document.querySelector(".top");
   if (dock && top && "IntersectionObserver" in window) {
-    new IntersectionObserver(function (entries) {
-      dock.classList.toggle("show", !entries[0].isIntersecting);
-    }, { threshold: 0 }).observe(top);
-    // hide while scrolling down (reading), show on the way back up; hide next to the final call to action and footer
-    var lastY = window.scrollY, nearEnd = false;
-    var ends = document.querySelectorAll(".finale, .footer");
-    var seen = new Set();
-    var endIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); });
-      nearEnd = seen.size > 0;
-      dock.classList.toggle("away", nearEnd);
-    }, { threshold: 0.15 });
-    ends.forEach(function (el) { endIO.observe(el); });
-    window.addEventListener("scroll", function () {
-      var y = window.scrollY;
-      if (Math.abs(y - lastY) < 8) return;
-      dock.classList.toggle("away", nearEnd || y > lastY);
-      lastY = y;
-    }, { passive: true });
+    // appears once the first screen is scrolled past, then stays put (no sliding in and out while scrolling)
+    var dockIO = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) { dock.classList.add("show"); dockIO.disconnect(); }
+    }, { threshold: 0 });
+    dockIO.observe(top);
   }
 
   // ---------- Daily Fates demo ----------
@@ -197,42 +183,6 @@
       return;
     }
   });
-
-  // ---------- living images: an <img data-anim="…webm|mp4"> becomes a looping muted video ----------
-  // Transparent WebM (VP9 alpha) is skipped on Safari, which plays WebM but drops the alpha channel.
-  var isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
-  var lowData = navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType || ""));
-  var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function liven() {
-    if (lowData || calm) return;
-    document.querySelectorAll("img[data-anim]").forEach(function (img) {
-      var src = img.getAttribute("data-anim");
-      if (/\.webm$/.test(src) && isSafari) return;
-      var v = document.createElement("video");
-      v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("muted", "");
-      v.setAttribute("disablepictureinpicture", ""); v.setAttribute("aria-hidden", "true");
-      v.className = img.className; v.poster = img.currentSrc || img.src; v.preload = "auto";
-      v.setAttribute("data-autoplay-visible", "");
-      v.addEventListener("canplay", function () {
-        if (!v.parentNode) { img.replaceWith(v); watch(v); }
-      }, { once: true });
-      v.src = root + src;
-      v.load();
-    });
-  }
-  if (document.readyState === "complete") liven(); else window.addEventListener("load", liven);
-
-  // ---------- local video: plays muted only while on screen; never on Save-Data or reduced motion ----------
-  function watch(v) {
-    if (lowData || calm || !("IntersectionObserver" in window)) return;
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting && e.intersectionRatio >= 0.35) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-        else if (!v.paused) v.pause();
-      });
-    }, { threshold: [0, 0.35] }).observe(v);
-  }
-  document.querySelectorAll("video[data-autoplay-visible]").forEach(watch);
 
   // ---------- YouTube: embeds need http(s); from a local file just open YouTube ----------
   document.querySelectorAll("[data-yt]").forEach(function (a) {
