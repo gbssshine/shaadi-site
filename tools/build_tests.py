@@ -157,7 +157,6 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>/* Screen height for full-screen blocks. Phone browsers resize the viewport while their toolbars hide and show, so it is measured once (and on rotation) instead of following every resize. iOS can report the 980px desktop layout before the viewport meta applies, so readings wider than the page are ignored and the height never exceeds the screen. */(function(){{var d=document.documentElement,w=0;function s(){{var cw=d.clientWidth||0,h=innerHeight,sh=screen&&screen.height||h;if(!h||!cw||innerWidth>cw*1.25)return;w=innerWidth;d.style.setProperty("--vh1",Math.min(h,sh)/100+"px")}}s();document.addEventListener("DOMContentLoaded",s);addEventListener("load",s);addEventListener("pageshow",s);addEventListener("resize",function(){{if(innerWidth!==w||!matchMedia("(pointer:coarse)").matches)s()}});addEventListener("orientationchange",function(){{setTimeout(s,350)}})}})();</script>
 <title>I’m a {name}. Which love bird are you? — Parrot Tests</title>
 <meta name="description" content="{tagline} Take the 2-minute test and find your love bird.">
 <meta name="theme-color" content="#F47A85">
@@ -166,10 +165,12 @@ PAGE = """<!doctype html>
 <meta property="og:title" content="I’m a {name}. Which love bird are you?">
 <meta property="og:description" content="{tagline} Take the 2-minute test.">
 <meta property="og:image" content="{site}/assets/share/og-love-bird-{id}.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="{site}/tests/love-bird/{id}.html">
 <meta name="twitter:card" content="summary_large_image">
+<script>/* Screen height for full-screen blocks. Phone browsers resize the viewport while their toolbars hide and show, so it is measured once (and on rotation) instead of following every resize. iOS can report the 980px desktop layout before the viewport meta applies, so readings wider than the page are ignored and the height never exceeds the screen. */(function(){{var d=document.documentElement,w=0;function s(){{var cw=d.clientWidth||0,h=innerHeight,sh=screen&&screen.height||h;if(!h||!cw||innerWidth>cw*1.25)return;w=innerWidth;d.style.setProperty("--vh1",Math.min(h,sh)/100+"px")}}s();document.addEventListener("DOMContentLoaded",s);addEventListener("load",s);addEventListener("pageshow",s);addEventListener("resize",function(){{if(innerWidth!==w||!matchMedia("(pointer:coarse)").matches)s()}});addEventListener("orientationchange",function(){{setTimeout(s,350)}})}})();</script>
 <link rel="icon" type="image/webp" href="../../assets/img/logo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

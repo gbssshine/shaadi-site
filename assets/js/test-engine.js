@@ -2,7 +2,8 @@
    window.TEST is written into each page by tools/build_all_tests.py from the app's own test data.
    Scoring mirrors the app (Services/TestResults/AnswerAnalysis.cs): answers 5..1, reverse items flipped,
    average → VeryHigh ≥ 4.25, High ≥ 3.5, VeryLow ≤ 1.75, Low ≤ 2.5, else Undecided (≥ half neutral) or Moderate.
-   A link with ?r=<code> (vh|h|m|l|vl|u) shows what the friend who shared it got. */
+   A result page (tests/<id>-<code>.html, or ?r=<code>) shows the friend's full result above the test.
+   Free (listed) tests show the full result; the others show a teaser with the rest locked. */
 (function () {
   var T = window.TEST;
   var card = document.querySelector("[data-test]");
@@ -20,13 +21,49 @@
     if (window.scrollY > top) window.scrollTo({ top: top, behavior: "smooth" });
   }
 
-  // friend's result from a shared link
+  // ---------- result blocks ----------
+  var SECTIONS = [
+    ["behaviors", "How you are in love", "sec-love"],
+    ["strengths", "Your strengths", "sec-good"],
+    ["weaknesses", "Your blind spots", "sec-warn"],
+    ["real", "In real life", "sec-real"],
+    ["tips", "Mithu’s tips for you", "sec-tips"]
+  ];
+  function list(items) { return "<ul>" + items.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>"; }
+  function fullSections(b, you) {
+    return SECTIONS.filter(function (s) { return b[s[0]] && b[s[0]].length; }).map(function (s) {
+      var title = you ? s[1] : s[1].replace("you are", "they are").replace("Your ", "Their ").replace("for you", "for them");
+      return '<section class="res-sec ' + s[2] + '"><h3>' + esc(title) + "</h3>" + list(b[s[0]]) + "</section>";
+    }).join("");
+  }
+  function lockedCard(b) {
+    var rows = [["How you are in love", (b.behaviors || []).length], ["Your blind spots", (b.weaknesses || []).length],
+                ["More real-life moments", Math.max(0, (b.real || []).length - 1)], ["Mithu’s tips for you", (b.tips || []).length]]
+      .filter(function (l) { return l[1] > 0; });
+    if (!rows.length) return "";
+    return '<div class="locked">' +
+      '<p class="locked-head"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2.5" fill="#C42F40"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="#C42F40" stroke-width="2"/></svg>The rest of your result is in the app</p>' +
+      '<ul class="locked-list">' + rows.map(function (l) {
+        return "<li><b>" + esc(l[0]) + "</b><span>" + l[1] + (l[1] === 1 ? " insight" : " insights") + "</span><i></i><i></i></li>";
+      }).join("") + "</ul>" +
+      '<a class="btn" href="' + PLAY + '" target="_blank" rel="noopener">Unlock it free in the app</a></div>';
+  }
+
+  // ---------- a friend's shared result: shown in full above the test ----------
   var params = new URLSearchParams(location.search);
   var friend = params.get("r") || T.friend;
   var banner = document.querySelector("[data-friend]");
   if (banner && friend && T.bands[friend]) {
-    banner.innerHTML = "<span>A friend got</span><b>" + esc(T.bands[friend].label) + "</b><span>Take the test and compare.</span>";
+    var fb = T.bands[friend];
+    banner.className = "friend-card";
+    banner.innerHTML =
+      '<p class="pt-kicker">' + esc(T.title) + " · a friend’s result</p>" +
+      '<h2 class="res-name res-name-sm">' + esc(fb.label) + "</h2>" +
+      '<p class="res-love">' + esc((fb.summaries || [""])[0]) + "</p>" +
+      '<details class="friend-more"><summary>See their full result</summary>' + fullSections(fb, false) + "</details>" +
+      '<button class="btn pt-start" type="button" data-start-friend>What will you get? Take the test</button>';
     banner.hidden = false;
+    banner.querySelector("[data-start-friend]").addEventListener("click", function () { answers = []; question(0); });
   }
 
   function question(i) {
@@ -65,31 +102,47 @@
     return { avg: avg, code: code };
   }
 
+  // ---------- share: on phones send the result card picture itself, so the image always arrives ----------
+  function setupShare(root, imgPath, text, url) {
+    var btn = root.querySelector("[data-share]");
+    var file = null;
+    var canFiles = !!(navigator.canShare && window.File && window.fetch);
+    if (!btn) return;
+    if (!canFiles) { btn.remove(); return; }
+    fetch(imgPath).then(function (r) { if (!r.ok) throw 0; return r.blob(); }).then(function (blob) {
+      var f = new File([blob], "my-result.jpg", { type: "image/jpeg" });
+      if (navigator.canShare({ files: [f] })) file = f; else btn.remove();
+    }).catch(function () { btn.remove(); });
+    btn.addEventListener("click", function () {
+      if (!file) return;
+      navigator.share({ files: [file], text: text + " " + url }).catch(function () {});
+    });
+  }
+
   function result() {
     var r = classify(), b = T.bands[r.code];
     var pos = Math.round((r.avg - 1) / 4 * 100);
     var url = T.site + "/tests/" + T.id + "-" + r.code + ".html";
-    var text = "Found this test on insta 🦜 I got “" + b.label + "” in " + T.title + ". What do you get?";
-    var locked = b.locked.filter(function (l) { return l[1] > 0; });
+    var img = "../assets/share/og-test-" + T.id + "-" + r.code + ".jpg";
+    var summary = (b.summaries || [""])[0];
+    var text = "Found this test on insta 🦜 I got “" + b.label + "” in " + T.title + ". " + summary + " What do you get?";
+    var wa = "https://wa.me/?text=" + encodeURIComponent(text + " " + url);
+    var body = T.open
+      ? fullSections(b, true)
+      : ((b.strengths && b.strengths[0] ? '<div class="res-box res-good"><div><span>Your strength</span><p>' + esc(b.strengths[0]) + "</p></div></div>" : "") +
+         (b.real && b.real[0] ? '<div class="res-box"><div><span>In real life</span><p>' + esc(b.real[0]) + "</p></div></div>" : "") +
+         lockedCard(b));
     show(
       '<div class="result" style="display:grid;gap:12px;justify-items:center;width:100%">' +
         '<p class="pt-kicker">' + esc(T.title) + " · your result</p>" +
         '<h2 class="res-name res-name-sm" tabindex="-1">' + esc(b.label) + "</h2>" +
         '<div class="meter-big"><span class="q-bar q-bar-dot"><i style="width:' + pos + '%"></i></span>' +
           "<p><span>" + esc(T.low) + "</span><span>" + esc(T.high) + "</span></p></div>" +
-        '<p class="res-love">' + esc(b.summary) + "</p>" +
-        (b.strength ? '<div class="res-box res-good"><div><span>Your strength</span><p>' + esc(b.strength) + "</p></div></div>" : "") +
-        (b.real ? '<div class="res-box"><div><span>In real life</span><p>' + esc(b.real) + "</p></div></div>" : "") +
-        (locked.length ?
-          '<div class="locked">' +
-            '<p class="locked-head"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2.5" fill="#C42F40"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="#C42F40" stroke-width="2"/></svg>Your full result is in the app</p>' +
-            '<ul class="locked-list">' + locked.map(function (l) {
-              return "<li><b>" + esc(l[0]) + "</b><span>" + l[1] + (l[1] === 1 ? " insight" : " insights") + "</span><i></i><i></i></li>";
-            }).join("") + "</ul>" +
-            '<a class="btn" href="' + PLAY + '" target="_blank" rel="noopener">Unlock it free in the app</a>' +
-          "</div>" : "") +
+        '<p class="res-love">' + esc(summary) + "</p>" +
+        body +
         '<div class="share-row">' +
-          '<a class="btn btn-soft" href="https://wa.me/?text=' + encodeURIComponent(text + " " + url) + '" target="_blank" rel="noopener">Compare with a friend on WhatsApp</a>' +
+          '<button class="btn" type="button" data-share>Share my result</button>' +
+          '<a class="btn btn-wa" href="' + wa + '" target="_blank" rel="noopener">Send on WhatsApp</a>' +
           '<button class="link-btn" type="button" data-again>Take the test again</button>' +
         "</div>" +
         '<div class="fate-tease">' +
@@ -100,6 +153,7 @@
         "</div>" +
       "</div>"
     );
+    setupShare(card, img, text, url);
     card.querySelector(".res-name").focus({ preventScroll: true });
     card.querySelector("[data-again]").addEventListener("click", function () { answers = []; question(0); });
   }

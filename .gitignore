@@ -2,3 +2,6 @@ screenshots/
 tools/__pycache__/
 tools/export-tests/bin/
 tools/export-tests/obj/
+tools/check-scoring/bin/
+tools/check-scoring/obj/
+tools/scoring-samples.json

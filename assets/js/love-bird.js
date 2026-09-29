@@ -85,7 +85,8 @@
           '<div class="res-box res-flag"><div><span>Red flag</span><p>' + esc(b.flag) + "</p></div></div>" +
         "</div>" +
         '<div class="share-row">' +
-          '<a class="btn" href="' + wa + '" target="_blank" rel="noopener">Send to a friend on WhatsApp</a>' +
+          '<button class="btn" type="button" data-share>Share my bird</button>' +
+          '<a class="btn btn-wa" href="' + wa + '" target="_blank" rel="noopener">Send on WhatsApp</a>' +
           '<div class="share-2">' +
             '<a class="btn btn-soft" href="../assets/share/love-bird-' + id + '.jpg" download="love-bird-' + id + '.jpg">Save image</a>' +
             '<button class="btn btn-soft" type="button" data-copy>Copy link</button>' +
@@ -101,6 +102,7 @@
         "</div>" +
       "</div>"
     );
+    setupShare("../assets/share/love-bird-" + id + ".jpg", shareText(b) + " " + url);
     card.querySelector(".res-name").focus({ preventScroll: true });
     card.querySelector("[data-again]").addEventListener("click", function () { answers = []; history.replaceState(null, "", location.pathname); question(0); });
     card.querySelector("[data-copy]").addEventListener("click", function () {
@@ -115,6 +117,18 @@
     });
     if (fresh) history.replaceState(null, "", "#" + id);
     markGrid(id);
+  }
+
+  // on phones: share the result card picture itself (with the text), so the image always arrives
+  function setupShare(imgPath, text) {
+    var btn = card.querySelector("[data-share]"), file = null;
+    if (!btn) return;
+    if (!(navigator.canShare && window.File && window.fetch)) { btn.remove(); return; }
+    fetch(imgPath).then(function (r) { if (!r.ok) throw 0; return r.blob(); }).then(function (blob) {
+      var f = new File([blob], "my-love-bird.jpg", { type: "image/jpeg" });
+      if (navigator.canShare({ files: [f] })) file = f; else btn.remove();
+    }).catch(function () { btn.remove(); });
+    btn.addEventListener("click", function () { if (file) navigator.share({ files: [file], text: text }).catch(function () {}); });
   }
 
   function markGrid(id) {

@@ -51,23 +51,22 @@ def e(s):
 
 
 def page_data(t, cats, tests_by_id):
+    """Everything the web test needs. Free (listed) tests show the full result; the others
+    show a teaser with the rest locked, but a result shared by a friend is always shown in full."""
     bands = {}
     for level, code in LEVELS.items():
         b = t["bands"][level]
         bands[code] = {
             "label": b["label"],
-            "summary": (b["summaries"] or [""])[0],
-            "strength": (b["strengths"] or [""])[0],
-            "real": (b["realLife"] or [""])[0],
-            "locked": [
-                ["How you act in love", len(b["behaviors"])],
-                ["Your blind spots", len(b["weaknesses"])],
-                ["More real-life moments", max(0, len(b["realLife"]) - 1)],
-                ["Tips from Mithu", len(b["tips"])],
-            ],
+            "summaries": b["summaries"],
+            "behaviors": b["behaviors"],
+            "strengths": b["strengths"],
+            "weaknesses": b["weaknesses"],
+            "real": b["realLife"],
+            "tips": b["tips"],
         }
     return {
-        "id": t["id"], "title": t["title"], "site": SITE,
+        "id": t["id"], "title": t["title"], "site": SITE, "open": t["id"] in OPEN,
         "q": [[q["text"], 1 if q["reverse"] else 0] for q in t["questions"]],
         "bands": bands,
         "low": t["bands"]["VeryLow"]["label"], "high": t["bands"]["VeryHigh"]["label"],
@@ -88,8 +87,8 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>/* Screen height for full-screen blocks. Phone browsers resize the viewport while their toolbars hide and show, so it is measured once (and on rotation) instead of following every resize. iOS can report the 980px desktop layout before the viewport meta applies, so readings wider than the page are ignored and the height never exceeds the screen. */(function(){{var d=document.documentElement,w=0;function s(){{var cw=d.clientWidth||0,h=innerHeight,sh=screen&&screen.height||h;if(!h||!cw||innerWidth>cw*1.25)return;w=innerWidth;d.style.setProperty("--vh1",Math.min(h,sh)/100+"px")}}s();document.addEventListener("DOMContentLoaded",s);addEventListener("load",s);addEventListener("pageshow",s);addEventListener("resize",function(){{if(innerWidth!==w||!matchMedia("(pointer:coarse)").matches)s()}});addEventListener("orientationchange",function(){{setTimeout(s,350)}})}})();</script>
 {meta}
+<script>/* Screen height for full-screen blocks. Phone browsers resize the viewport while their toolbars hide and show, so it is measured once (and on rotation) instead of following every resize. iOS can report the 980px desktop layout before the viewport meta applies, so readings wider than the page are ignored and the height never exceeds the screen. */(function(){{var d=document.documentElement,w=0;function s(){{var cw=d.clientWidth||0,h=innerHeight,sh=screen&&screen.height||h;if(!h||!cw||innerWidth>cw*1.25)return;w=innerWidth;d.style.setProperty("--vh1",Math.min(h,sh)/100+"px")}}s();document.addEventListener("DOMContentLoaded",s);addEventListener("load",s);addEventListener("pageshow",s);addEventListener("resize",function(){{if(innerWidth!==w||!matchMedia("(pointer:coarse)").matches)s()}});addEventListener("orientationchange",function(){{setTimeout(s,350)}})}})();</script>
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/webp" href="../assets/img/logo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -114,7 +113,7 @@ PAGE = """<!doctype html>
     <p class="pt-side-meta"><span>{n} statements</span><span>About 2 minutes</span><span>No sign-up</span></p>
   </aside>
   <div class="pt-flow">
-  <p class="friend" data-friend hidden></p>
+  <section class="friend-card" data-friend hidden aria-label="A friend’s result"></section>
   <section class="pt-card" data-test aria-live="polite">
     <div class="res-art pt-intro-art"><img src="../assets/img/tests/{art}.webp" width="200" height="200" alt=""></div>
     <p class="pt-kicker">{cat} · {n} statements · 2 min</p>
@@ -166,7 +165,7 @@ def head_meta(t, n, code=None, label=None):
         url, img = f"{SITE}/tests/{tid}-{code}.html", f"{SITE}/assets/share/og-test-{tid}-{code}.jpg"
         og_title = f"A friend got “{e(label)}” in {title}. What will you get?"
         page_title = og_title
-        extra = [f'<meta name="robots" content="noindex">', f'<link rel="canonical" href="{SITE}/tests/{tid}.html">']
+        extra = []
     else:
         url, img = f"{SITE}/tests/{tid}.html", f"{SITE}/assets/share/og-test-{tid}.jpg"
         og_title = f"{title}: take the 2-minute test"
@@ -182,6 +181,9 @@ def head_meta(t, n, code=None, label=None):
         f'<meta property="og:title" content="{og_title}">',
         f'<meta property="og:description" content="{sub}. {n} statements, 2 minutes. What do you get?">',
         f'<meta property="og:image" content="{img}">',
+        f'<meta property="og:image:secure_url" content="{img}">',
+        '<meta property="og:image:type" content="image/jpeg">',
+        f'<meta property="og:image:alt" content="{og_title}">',
         '<meta property="og:image:width" content="1200">',
         '<meta property="og:image:height" content="630">',
         f'<meta property="og:url" content="{url}">',

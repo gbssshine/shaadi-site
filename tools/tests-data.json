@@ -2103,9 +2103,9 @@
       "category": "personality",
       "title": "Humor Style",
       "subtitle": "Playful energy and teasing balance",
-      "description": "Measures playful energy, teasing style, and whether your humor is warm or sharp.",
+      "description": "Measures how much playful, light-hearted humor you bring to your connections.",
       "whatYouLearn": "How you use humor in bonding and conflict.",
-      "howItHelpsMatch": "Matches better when humor style matches (soft vs sharp).",
+      "howItHelpsMatch": "Matches feel easier when both people enjoy a similar amount of playfulness.",
       "questions": [
         {
           "text": "I like playful teasing when it stays respectful.",
@@ -2128,7 +2128,7 @@
           "reverse": false
         },
         {
-          "text": "My jokes can be too sharp sometimes.",
+          "text": "I rarely joke around, even with people I know well.",
           "reverse": true
         },
         {
@@ -2136,11 +2136,11 @@
           "reverse": true
         },
         {
-          "text": "I often use sarcasm when I’m upset.",
+          "text": "I’d rather talk seriously than keep things light.",
           "reverse": true
         }
       ],
-      "measures": "how you use humor in relationships and whether it's warm or sharp",
+      "measures": "how much playful, light-hearted humor you bring to relationships",
       "bands": {
         "VeryHigh": {
           "label": "Playful entertainer",
@@ -2276,7 +2276,7 @@
           ]
         },
         "VeryLow": {
-          "label": "Humor-minimal",
+          "label": "Serious at heart",
           "summaries": [
             "Humor plays almost no role in your communication style.",
             "You prefer direct, no-nonsense interaction.",
@@ -4578,7 +4578,7 @@
       "title": "Bond Strength",
       "subtitle": "How quickly you form closeness",
       "description": "This test shows how easily you feel emotionally connected and how much closeness you naturally seek. It helps the app predict pacing: some people bond fast, others need time and space.",
-      "whatYouLearn": "Your natural pacing in closeness, reassurance needs, and how you behave when connection feels uncertain.",
+      "whatYouLearn": "Your natural pace in getting close, and how quickly you invest emotionally.",
       "howItHelpsMatch": "Matching improves when two people have compatible pace: similar bonding speed reduces hot/cold dynamics.",
       "questions": [
         {
@@ -4586,15 +4586,15 @@
           "reverse": false
         },
         {
-          "text": "I don’t need constant reassurance to feel safe in a connection.",
+          "text": "It takes me a long time to feel close to someone new.",
           "reverse": true
         },
         {
-          "text": "When someone pulls away, I notice it fast and it affects me.",
+          "text": "A few good conversations can make me feel really close to someone.",
           "reverse": false
         },
         {
-          "text": "I can stay calm even when I’m not sure where I stand with someone.",
+          "text": "I keep my feelings in check until I know someone well.",
           "reverse": true
         },
         {
@@ -4602,7 +4602,7 @@
           "reverse": false
         },
         {
-          "text": "I’m comfortable taking things slowly without overthinking.",
+          "text": "I need to see someone’s consistency for a while before I invest emotionally.",
           "reverse": true
         },
         {
@@ -9092,35 +9092,35 @@
       "howItHelpsMatch": "Helps avoid clashes about roles, family expectations, and lifestyle norms.",
       "questions": [
         {
-          "text": "Family values strongly influence my choices.",
+          "text": "I want to keep my family’s traditions alive in my own home.",
           "reverse": true
         },
         {
-          "text": "Traditions feel outdated to me.",
+          "text": "Many traditions feel outdated to me.",
           "reverse": false
         },
         {
-          "text": "I prefer clear roles and structure in a relationship.",
+          "text": "I prefer clear, traditional roles in a relationship.",
           "reverse": true
         },
         {
-          "text": "Rules and norms annoy me.",
+          "text": "Chores, money and decisions should be shared equally, whatever custom says.",
           "reverse": false
         },
         {
-          "text": "Commitment matters more than freedom.",
+          "text": "Customs and rituals are an important part of married life for me.",
           "reverse": true
         },
         {
-          "text": "I avoid labels and expectations.",
+          "text": "I’d rather create our own way of living than follow the usual expectations.",
           "reverse": false
         },
         {
-          "text": "Respect for elders/family is important.",
+          "text": "Elders should have a big say in major family decisions.",
           "reverse": true
         },
         {
-          "text": "I don’t care what families think.",
+          "text": "A couple should make their own big decisions, even if relatives disagree.",
           "reverse": false
         }
       ],
@@ -9129,7 +9129,7 @@
         "VeryHigh": {
           "label": "Fully modern",
           "summaries": [
-            "You embrace modern relationship norms: equality, fluidity, and partnership without rigid roles.",
+            "You embrace modern relationship norms: equality, flexibility, and partnership without rigid roles.",
             "Traditional expectations feel outdated to you — you prefer building your own rules.",
             "Flexibility and fairness define your relationship values."
           ],
@@ -9264,7 +9264,7 @@
           ],
           "behaviors": [
             "You structure your relationship around traditional roles and expectations.",
-            "Modern relationship trends like open communication about roles feel foreign or unnecessary.",
+            "Renegotiating roles from scratch feels unnecessary to you — the familiar way works.",
             "You look to family and cultural norms as your relationship guide."
           ],
           "strengths": [
@@ -9762,7 +9762,7 @@
       "category": "values",
       "title": "Ambition Balance",
       "subtitle": "Career focus vs relationship focus",
-      "description": "Measures how you balance career ambition with love/relationship investment.",
+      "description": "Measures how strongly career and personal goals drive you, and how much of your energy they take.",
       "whatYouLearn": "Your priorities when life gets busy.",
       "howItHelpsMatch": "Prevents mismatch: one wants constant time/attention, the other is in grind mode.",
       "questions": [
@@ -9771,15 +9771,15 @@
           "reverse": false
         },
         {
-          "text": "I can balance ambition with relationship needs.",
+          "text": "I have clear goals for the next few years and a plan to reach them.",
           "reverse": false
         },
         {
-          "text": "I respect a partner’s grind and goals.",
+          "text": "I’m willing to work extra hours now to build a better future.",
           "reverse": false
         },
         {
-          "text": "I like building together as a team.",
+          "text": "My career matters to me as much as finding love.",
           "reverse": false
         },
         {
@@ -9795,7 +9795,7 @@
           "reverse": true
         },
         {
-          "text": "I get irritated by very ambitious people.",
+          "text": "A calm, simple life matters more to me than success.",
           "reverse": true
         }
       ],
@@ -10024,181 +10024,181 @@
           "reverse": true
         }
       ],
-      "measures": "how important health, fitness, and physical wellness are in your daily life",
+      "measures": "how much healthy habits, self-care and a steady daily rhythm matter to you",
       "bands": {
         "VeryHigh": {
-          "label": "Health-obsessed",
+          "label": "Health-first",
           "summaries": [
-            "Health and fitness are central to your lifestyle. You eat well, train regularly, and value a body-aware partner.",
-            "Physical wellness is a daily priority, not an occasional effort.",
-            "A partner who neglects health would feel fundamentally misaligned."
+            "Healthy habits come first for you: good sleep, mindful food and a steady daily rhythm.",
+            "Looking after your health is a daily priority, not an occasional effort.",
+            "You'd love a partner who takes care of their health the way you do."
           ],
           "behaviors": [
-            "You exercise multiple times per week with a structured plan.",
-            "You read nutrition labels and plan meals thoughtfully.",
-            "Skipping a workout feels wrong and affects your mood.",
-            "You prefer active dates — hiking, gym, sports — over sedentary ones."
+            "You protect your sleep and keep a steady daily rhythm.",
+            "You think about what you eat and how it makes you feel.",
+            "Being away from your routine for long leaves you feeling off.",
+            "You enjoy fresh-air plans, like a long walk together, as much as a café."
           ],
           "strengths": [
-            "Your health habits create energy and longevity for your relationship.",
-            "You model discipline that can inspire your partner.",
-            "Physical wellness reduces stress and improves your mood."
+            "Your habits bring energy and steadiness to daily life together.",
+            "You model self-care in a way that can inspire a partner.",
+            "Good sleep and routine help you stay calm and present."
           ],
           "weaknesses": [
-            "Health obsession can feel controlling to a partner with different habits.",
-            "You might judge your partner's food or exercise choices.",
-            "Fitness can become a replacement for emotional connection."
+            "Strict routines can feel controlling to a partner with different habits.",
+            "You might comment on your partner's food or sleep more than they'd like.",
+            "When routines always come first, spontaneous plans can suffer."
           ],
           "realLife": [
-            "Your fridge is organized, your gym bag is always packed, and you know your macros.",
-            "Active hobbies fill your free time.",
-            "Health is a visible part of your daily identity."
+            "Your days have a rhythm: regular sleep, planned meals and time to move.",
+            "You'd pick a morning walk over a very late night out.",
+            "Friends see looking after yourself as part of who you are."
           ],
           "tips": [
-            "Make sure your health standards don't become a measuring stick for your partner.",
-            "Health is personal — share your lifestyle without imposing it.",
-            "Allow room for indulgence. Perfection isn't sustainable."
+            "Make sure your habits don't become a measuring stick for your partner.",
+            "Share your lifestyle as an invitation, not a rule.",
+            "Leave room for late nights and treats. Perfection isn't sustainable."
           ]
         },
         "High": {
           "label": "Health-conscious",
           "summaries": [
-            "You take health seriously and maintain good habits.",
-            "Fitness is part of your routine and you value it in a partner."
+            "You take your health seriously and keep good habits most days.",
+            "Sleep, food and routine matter to you, and you value the same in a partner."
           ],
           "behaviors": [
-            "You work out regularly and make conscious food choices.",
-            "Health-related conversations are a natural part of your life.",
-            "You seek a partner who also values physical wellness."
+            "You keep regular sleep and meal times most days.",
+            "Health comes up naturally when you plan your week.",
+            "You look for a partner who also looks after themselves."
           ],
           "strengths": [
-            "You bring vitality and energy to daily life.",
-            "Your commitment to health creates shared activities like exercise or cooking.",
-            "Your habits reduce long-term health risks for both of you."
+            "You bring vitality and good energy to daily life.",
+            "Healthy habits give you things to share, like cooking or walking together.",
+            "Your habits reduce long-term health worries for both of you."
           ],
           "weaknesses": [
             "You might not understand a partner who doesn't share your health values.",
-            "Health-focused comments can feel like criticism.",
-            "Your standards might make your partner feel inadequate."
+            "Health comments can sound like criticism, even when you mean well.",
+            "Your standards might make a partner feel they're falling short."
           ],
           "realLife": [
-            "You work out several times a week and cook healthy meals regularly.",
-            "Your routine includes health-conscious choices.",
+            "You keep a healthy routine most weeks and cook proper meals often.",
+            "Your everyday choices lean healthy without much effort.",
             "Friends describe you as someone who takes care of themselves."
           ],
           "tips": [
-            "Invite your partner to join your active lifestyle, but accept if they decline.",
-            "Health conversations should inspire, not shame.",
-            "Balance fitness goals with quality time."
+            "Invite your partner into your routines, and accept a no gracefully.",
+            "Talk about health in a way that inspires, not shames.",
+            "Balance your routines with unplanned time together."
           ]
         },
         "Moderate": {
-          "label": "Moderately healthy",
+          "label": "Healthy within reason",
           "summaries": [
-            "You care about health but don't obsess over it.",
-            "You try to be healthy within reason."
+            "You care about your health without being strict about it.",
+            "You keep healthy habits within reason and enjoy the exceptions too."
           ],
           "behaviors": [
-            "You exercise sometimes and eat well when it's convenient.",
-            "Health isn't your identity but you make reasonable choices.",
-            "You can enjoy a burger without guilt and a salad without complaint."
+            "You eat well when it's easy and let it slide when life gets busy.",
+            "Health isn't your identity, but you make sensible choices.",
+            "You can enjoy street food without guilt and a salad without complaint."
           ],
           "strengths": [
-            "You enjoy health without it controlling your life.",
-            "Your balance means you can share both active and relaxing time.",
-            "You don't pressure your partner about health."
+            "You enjoy healthy habits without letting them run your life.",
+            "You can share both active and lazy days with a partner.",
+            "You don't pressure your partner about their habits."
           ],
           "weaknesses": [
-            "Your inconsistency might frustrate a very health-conscious partner.",
-            "Moderate effort doesn't build habits that last.",
-            "Health might slip further than you realize over time."
+            "Your easygoing approach might frustrate a very health-focused partner.",
+            "Habits you keep only when it's easy tend not to last.",
+            "Small slips can quietly add up over the years."
           ],
           "realLife": [
-            "You exercise when you feel like it and eat reasonably most days.",
-            "Health isn't your personality but it's somewhere in the background.",
-            "You don't look at a menu and count calories."
+            "You move and eat well when you feel like it, and relax when you don't.",
+            "Health sits in the background of your life, not at the centre.",
+            "You don't count calories when you look at a menu."
           ],
           "tips": [
-            "Consistency matters more than intensity. Pick one healthy habit and stick with it.",
+            "Consistency matters more than intensity. Pick one habit and keep it.",
             "Ask your partner what role health plays in their life.",
-            "Small improvements compound over time."
+            "Small improvements add up over time."
           ]
         },
         "Low": {
           "label": "Relaxed about health",
           "summaries": [
-            "Health isn't a primary focus. You enjoy life and don't stress about fitness.",
-            "You'd rather enjoy food and comfort than count calories."
+            "Health isn't a big focus for you. You'd rather enjoy life than plan every habit.",
+            "Your routine follows your mood more than a health plan."
           ],
           "behaviors": [
-            "Exercise happens rarely and usually requires external motivation.",
-            "Food choices are driven by taste and convenience, not nutrition.",
-            "Health concerns surface only during doctor visits or scares."
+            "Your sleep and meals follow your schedule, not a plan.",
+            "Food choices are driven by taste and convenience.",
+            "Health gets your attention mostly when something feels wrong."
           ],
           "strengths": [
-            "You enjoy life without restriction.",
-            "Your relaxed attitude means no pressure on your partner's body or habits.",
-            "Food and comfort bring genuine joy."
+            "You enjoy life without strict rules.",
+            "Your relaxed attitude means no pressure on a partner's body or habits.",
+            "Food and comfort bring you genuine joy."
           ],
           "weaknesses": [
-            "A health-conscious partner may feel unsupported in their habits.",
-            "Neglecting health affects energy, mood, and longevity — all things that matter in relationships.",
-            "Your comfort zone might be slowly shrinking your life."
+            "A health-focused partner may feel alone in their habits.",
+            "Sleep, energy and mood all shape a relationship, and habits shape them.",
+            "Comfort can slowly turn into a rut."
           ],
           "realLife": [
-            "Exercise is occasional at best.",
+            "Late nights and irregular meals are normal for you.",
             "Meals are chosen for taste and convenience.",
-            "Your daily life doesn't include health-oriented habits."
+            "Your daily life doesn't revolve around health habits."
           ],
           "tips": [
-            "One walk per day changes more than you'd think.",
-            "If your partner values health, joining them occasionally is an act of love.",
-            "Your body is the vehicle for your life — basic maintenance matters."
+            "A daily walk changes more than you'd think.",
+            "If your partner values health, joining them sometimes is an act of love.",
+            "Basic care, like sleep and water, is worth protecting."
           ]
         },
         "VeryLow": {
-          "label": "Health-indifferent",
+          "label": "Not health-focused",
           "summaries": [
-            "Health and fitness are not priorities for you at all.",
-            "Physical wellness doesn't influence your lifestyle choices."
+            "Health habits are not a priority for you right now.",
+            "You live by what feels good in the moment, not by routines."
           ],
           "behaviors": [
-            "Physical activity is avoided unless absolutely necessary.",
-            "Diet is driven entirely by pleasure and convenience.",
-            "You resist health-related suggestions from partners or friends."
+            "Routines feel restrictive, so you mostly skip them.",
+            "You choose food and sleep by what feels good right now.",
+            "Health advice from others can feel like pressure."
           ],
           "strengths": [
-            "You never judge others based on their fitness or body.",
-            "You prioritize other values over physical appearance.",
-            "You accept yourself and your partner as-is."
+            "You never judge others by their habits or their body.",
+            "You put other things, like people and experiences, first.",
+            "You accept yourself and your partner as you are."
           ],
           "weaknesses": [
-            "Complete health neglect has real consequences for your future and your partner's.",
-            "Your partner may worry about your well-being.",
-            "Resistance to health conversations limits honest partnership."
+            "Ignoring your health for a long time has real costs for you and the people who love you.",
+            "A partner may worry about your well-being.",
+            "Avoiding health conversations can make honest partnership harder."
           ],
           "realLife": [
-            "Physical activity is virtually absent from your routine.",
-            "Food is purely about pleasure and convenience.",
-            "Health conversations feel irrelevant to your daily experience."
+            "Routines are mostly absent from your week.",
+            "Food and sleep are about pleasure and convenience.",
+            "Health conversations feel far from your daily life."
           ],
           "tips": [
-            "Consider that health affects your energy, mood, and future — things your partner cares about.",
-            "Start with one tiny habit — even 10 minutes of movement counts.",
-            "Resistance to change isn't the same as self-acceptance."
+            "Your health shapes your energy, mood and future, and your partner cares about all three.",
+            "Start with one tiny habit: even ten minutes of movement counts.",
+            "Choosing comfort is fine; just make sure it's a choice."
           ]
         },
         "Undecided": {
           "label": "Context-dependent",
           "summaries": [
-            "Your health habits swing between disciplined and neglected.",
-            "Motivation for fitness comes and goes.",
-            "Your approach to wellness is inconsistent."
+            "Your health habits swing between disciplined and relaxed.",
+            "Motivation for healthy habits comes and goes.",
+            "Your approach to wellness changes with the season of life you're in."
           ],
           "behaviors": [
-            "You start fitness routines with enthusiasm and abandon them within weeks.",
-            "Health goals appear and disappear from your priority list.",
-            "Your partner may see your health efforts as unreliable."
+            "You start healthy routines with energy and drop them after a few weeks.",
+            "Health goals come and go from your priority list.",
+            "A partner may find your habits hard to predict."
           ],
           "strengths": [],
           "weaknesses": [],
@@ -18994,34 +18994,34 @@
           "reverse": true
         }
       ],
-      "measures": "how much patience and emotional stability you bring to long-term relationships",
+      "measures": "how comfortable you are with the calm, steady side of a long relationship",
       "bands": {
         "VeryHigh": {
-          "label": "Endlessly patient",
+          "label": "Thrives in steady love",
           "summaries": [
-            "You bring extraordinary patience to relationships. You can wait, endure, and stay steady through anything.",
-            "Your emotional stability is a cornerstone of long-term commitment.",
-            "You believe in riding out storms rather than jumping ship."
+            "Calm, steady love feels good to you. Routine doesn't dim your attraction.",
+            "You grow closeness through consistency and care, so quiet seasons don't make you restless.",
+            "When life gets ordinary, you stay warm and loyal, and that steadiness is rare."
           ],
           "behaviors": [
-            "When it comes to patience in calm seasons, people around you see steadiness rather than drama.",
-            "You handle patience in calm seasons well even on bad days — it doesn't depend on your mood.",
-            "Partners tend to feel safe with you around patience in calm seasons, because they know what to expect."
+            "When it comes to the calm, everyday side of love, people around you see steadiness rather than drama.",
+            "You handle the calm, everyday side of love well even on bad days — it doesn't depend on your mood.",
+            "Partners tend to feel safe with you around the calm, everyday side of love, because they know what to expect."
           ],
           "strengths": [
-            "Your maturity around patience in calm seasons is a real gift in a relationship.",
-            "People close to you feel at ease with you around patience in calm seasons.",
+            "Your maturity around the calm, everyday side of love is a real gift in a relationship.",
+            "People close to you feel at ease with you around the calm, everyday side of love.",
             "This is the kind of strength that keeps small problems small."
           ],
           "weaknesses": [
             "Because this comes easily to you, you may expect the same from a partner who is still learning.",
             "Strength here can hide effort elsewhere — check that you aren't skipping harder conversations.",
-            "Staying calm around patience in calm seasons shouldn't turn into always being the one who gives in."
+            "Staying calm around the calm, everyday side of love shouldn't turn into always being the one who gives in."
           ],
           "realLife": [
-            "Everyday moments around patience in calm seasons rarely turn into arguments with you.",
+            "Everyday moments around the calm, everyday side of love rarely turn into arguments with you.",
             "Friends and family probably see you as the steady one here.",
-            "Your partner can relax around patience in calm seasons because you are predictable in a good way."
+            "Your partner can relax around the calm, everyday side of love because you are predictable in a good way."
           ],
           "tips": [
             "Keep doing what works, and explain it to your partner — it helps them meet you halfway.",
@@ -19030,77 +19030,77 @@
           ]
         },
         "High": {
-          "label": "Very patient",
+          "label": "Enjoys calm seasons",
           "summaries": [
-            "You're patient with your partner and handle long-term challenges well.",
-            "Stability is something you provide naturally."
+            "You enjoy peaceful, stable stretches in a relationship.",
+            "Routine rarely worries you, though you like some fun along the way."
           ],
           "behaviors": [
-            "Most of the time you handle patience in calm seasons well, and people notice.",
-            "Only unusual stress knocks you off balance around patience in calm seasons.",
-            "Your habits around patience in calm seasons are mostly healthy and fairly consistent."
+            "Most of the time you handle the calm, everyday side of love well, and people notice.",
+            "Only unusual stress knocks you off balance around the calm, everyday side of love.",
+            "Your habits around the calm, everyday side of love are mostly healthy and fairly consistent."
           ],
           "strengths": [
-            "You are reliable around patience in calm seasons, and that builds trust over time.",
-            "You recover quickly when patience in calm seasons doesn't go perfectly.",
+            "You are reliable around the calm, everyday side of love, and that builds trust over time.",
+            "You recover quickly when the calm, everyday side of love doesn't go perfectly.",
             "Partners can count on you here more often than not."
           ],
           "weaknesses": [
-            "Under real pressure, your good habits around patience in calm seasons can slip.",
-            "Don't assume a partner sees patience in calm seasons the way you do — ask.",
+            "Under real pressure, your good habits around the calm, everyday side of love can slip.",
+            "Don't assume a partner sees the calm, everyday side of love the way you do — ask.",
             "A few old reactions still show up now and then."
           ],
           "realLife": [
-            "Day to day, patience in calm seasons usually goes smoothly for you.",
+            "Day to day, the calm, everyday side of love usually goes smoothly for you.",
             "When it doesn't, you tend to notice and correct it.",
-            "Your partner mostly experiences your “Patient” side."
+            "Your partner mostly experiences your “Content with calm” side."
           ],
           "tips": [
-            "Notice which situations still trip you up around patience in calm seasons and plan for them.",
+            "Notice which situations still trip you up around the calm, everyday side of love and plan for them.",
             "Say out loud what helps you stay at your best.",
             "Aim for consistency, not perfection."
           ]
         },
         "Moderate": {
-          "label": "Moderately patient",
+          "label": "Calm with a spark",
           "summaries": [
-            "You're patient in most situations but have your limits.",
-            "Under sustained stress, patience can wear thin."
+            "You like stability, but you also need some spark to stay engaged.",
+            "Calm stretches are fine for you as long as there's some novelty too."
           ],
           "behaviors": [
-            "You handle patience in calm seasons reasonably well when things are calm, less so under stress.",
-            "Some days you show your “Patient” side, other days your “Needs excitement” side.",
-            "You are aware of your patterns around patience in calm seasons, which is half the work."
+            "You handle the calm, everyday side of love reasonably well when things are calm, less so under stress.",
+            "Some days you show your “Content with calm” side, other days your “Needs excitement” side.",
+            "You are aware of your patterns around the calm, everyday side of love, which is half the work."
           ],
           "strengths": [
-            "You have a workable base around patience in calm seasons to build on.",
+            "You have a workable base around the calm, everyday side of love to build on.",
             "You can see both sides, which helps you understand a partner.",
             "Small, steady changes will show quickly for you."
           ],
           "weaknesses": [
-            "Stress is when your approach to patience in calm seasons tends to break down.",
+            "Stress is when your approach to the calm, everyday side of love tends to break down.",
             "A partner may not know which version of you they will get.",
-            "Unfinished moments around patience in calm seasons can quietly pile up."
+            "Unfinished moments around the calm, everyday side of love can quietly pile up."
           ],
           "realLife": [
-            "Around patience in calm seasons, calm weeks go well and hard weeks show the cracks.",
+            "Around the calm, everyday side of love, calm weeks go well and hard weeks show the cracks.",
             "People close to you see both your strong and weaker moments here.",
             "Your partner may notice the difference between your good and bad days."
           ],
           "tips": [
-            "Pick one situation around patience in calm seasons and decide in advance how you want to respond.",
+            "Pick one situation around the calm, everyday side of love and decide in advance how you want to respond.",
             "Ask your partner which one change would help them most.",
             "Practice when things are calm; it makes stressful moments easier."
           ]
         },
         "Low": {
-          "label": "Impatient",
+          "label": "Needs a spark",
           "summaries": [
-            "Patience is challenging for you. You want results and resolution quickly.",
-            "Long periods of difficulty strain your commitment."
+            "Calm, routine phases can leave you restless.",
+            "You feel most alive in love when there's excitement in the air."
           ],
           "behaviors": [
-            "Around patience in calm seasons, your first reaction often leans toward “Needs excitement”.",
+            "Around the calm, everyday side of love, your first reaction often leans toward “Needs excitement”.",
             "You may not always notice how this lands on the people close to you.",
             "When you are tired or stressed, this pattern gets stronger."
           ],
@@ -19110,29 +19110,29 @@
             "Even a small improvement here will be noticed quickly."
           ],
           "weaknesses": [
-            "Your pattern around patience in calm seasons can create tension a partner feels but may not name.",
+            "Your pattern around the calm, everyday side of love can create tension a partner feels but may not name.",
             "Left alone, this habit tends to repeat in every relationship.",
-            "A partner who needs your “Patient” side may feel let down."
+            "A partner who needs your “Content with calm” side may feel let down."
           ],
           "realLife": [
-            "Everyday moments around patience in calm seasons can turn tense more often than you'd like.",
+            "Everyday moments around the calm, everyday side of love can turn tense more often than you'd like.",
             "Your partner may adjust their behavior to avoid triggering this side of you.",
             "It shows most on tired, busy or stressful days."
           ],
           "tips": [
-            "Choose one small habit around patience in calm seasons and practice it for a month.",
+            "Choose one small habit around the calm, everyday side of love and practice it for a month.",
             "Ask someone you trust to tell you, kindly, when the old pattern shows up.",
             "Pause before reacting — even ten seconds changes a lot."
           ]
         },
         "VeryLow": {
-          "label": "Very impatient",
+          "label": "Craves intensity",
           "summaries": [
-            "Patience is very difficult. You lose interest or energy when things don't improve fast.",
-            "Emotional instability can make long-term commitment feel impossible."
+            "You need strong emotions and excitement to feel that love is alive.",
+            "Steady, predictable stretches can feel like the spark has gone."
           ],
           "behaviors": [
-            "Around patience in calm seasons, the “Needs excitement” pattern is strong and shows up often.",
+            "Around the calm, everyday side of love, the “Needs excitement” pattern is strong and shows up often.",
             "It can take over quickly, especially when you feel hurt or pressured.",
             "People close to you are probably very aware of it."
           ],
@@ -19142,17 +19142,17 @@
             "This is a habit, not your identity — and habits can change."
           ],
           "weaknesses": [
-            "This pattern around patience in calm seasons is strong enough to strain even a good relationship.",
+            "This pattern around the calm, everyday side of love is strong enough to strain even a good relationship.",
             "Partners may feel they have to walk on eggshells.",
             "It usually has roots older than your current relationship."
           ],
           "realLife": [
-            "Patience in calm seasons is one of the most common sources of friction in your relationships.",
+            "The calm, everyday side of love is one of the most common sources of friction in your relationships.",
             "Your partner likely feels this side of you most days.",
             "It affects the mood at home more than you might think."
           ],
           "tips": [
-            "Make patience in calm seasons your main area to work on this year.",
+            "Make the calm, everyday side of love your main area to work on this year.",
             "A good book, a counselor or a trusted mentor can speed this up a lot.",
             "Tell your partner what you are working on — it turns them into an ally."
           ]
@@ -19160,12 +19160,12 @@
         "Undecided": {
           "label": "Mixed feelings",
           "summaries": [
-            "How you handle patience in calm seasons depends a lot on the day, the person and how safe you feel.",
-            "Some situations bring out your “Patient” side; others bring out the opposite.",
-            "Your answers did not settle on one side — your pattern with patience in calm seasons is still forming."
+            "How you handle the calm, everyday side of love depends a lot on the day, the person and how safe you feel.",
+            "Some situations bring out your “Content with calm” side; others bring out the opposite.",
+            "Your answers did not settle on one side — your pattern with the calm, everyday side of love is still forming."
           ],
           "behaviors": [
-            "Around patience in calm seasons, you can look like two different people depending on the day.",
+            "Around the calm, everyday side of love, you can look like two different people depending on the day.",
             "Specific situations or people bring out very different reactions in you.",
             "A partner may find it hard to predict which side of you will show up."
           ],

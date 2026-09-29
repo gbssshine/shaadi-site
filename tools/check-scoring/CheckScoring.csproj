@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Scores random answer sets with the app's own engine (for comparing with the website).
+       Links the app's pure-logic sources, like MauiApp2.ContentTests does.
+       Run: dotnet run -c Release (from this folder) -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);CS8618;CS8600;CS8602;CS8603;CS8604;CS8625</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\MauiApp2\MauiApp2\Models\TestModels.cs" Link="App\TestModels.cs" />
+    <Compile Include="..\..\..\MauiApp2\MauiApp2\Services\TestsCatalog.cs" Link="App\TestsCatalog.cs" />
+    <Compile Include="..\..\..\MauiApp2\MauiApp2\Services\TestsContentService.cs" Link="App\TestsContentService.cs" />
+    <Compile Include="..\..\..\MauiApp2\MauiApp2\Services\TestsScoringService.cs" Link="App\TestsScoringService.cs" />
+    <Compile Include="..\..\..\MauiApp2\MauiApp2\Services\TestResults\*.cs" LinkBase="App\TestResults" />
+  </ItemGroup>
+</Project>
