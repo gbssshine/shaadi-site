@@ -1196,3 +1196,23 @@ html { font-size: clamp(16px, calc(8px + .55vw), 19.5px); }
   .tcard em { grid-column: 3; grid-row: 1 / span 2; margin-top: 0; align-self: center; }
   .tb-chips { mask-image: linear-gradient(90deg, #000 85%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); }
 }
+/* phones: crop to the couple and Mithu (the left of the picture is empty sky meant for the desktop text) */
+@media (max-width: 699px) {
+  .band-img { height: auto; aspect-ratio: 10 / 9; object-fit: cover; object-position: 100% 50%; }
+}
+/* quick section chips under the header on phones and tablets: tests and astrology visible without the menu */
+.quick { display: none; }
+@media (max-width: 959px) {
+  .quick { position: relative; z-index: 5; display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+  .quick::-webkit-scrollbar { display: none; }
+  .quick a { flex: none; display: inline-flex; align-items: center; gap: 7px; min-height: 42px; padding: 6px 14px 6px 7px; border-radius: 99px;
+    background: rgba(255, 250, 247, .92); box-shadow: 0 6px 14px -8px rgba(122, 38, 60, .45); color: var(--plum); font-weight: 700; font-size: .9rem; text-decoration: none; white-space: nowrap; }
+  .quick img { width: 28px; height: 28px; object-fit: contain; }
+  .quick a[aria-current="page"] { background: var(--plum); color: #fff; }
+  .top-home .hero-stage { height: min(calc(var(--vh1, 1svh) * 30), 280px); }
+}
+/* About: the story picture keeps the couple and Mithu in frame on phones */
+@media (max-width: 699px) {
+  .story-img { max-height: none; aspect-ratio: 10 / 9; object-position: 100% 50%; }
+}
