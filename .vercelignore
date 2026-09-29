@@ -1,0 +1,7 @@
+# Build scripts, page sources and notes stay in the repo but are not served on the website.
+tools/
+src/
+screenshots/
+DESIGN.md
+README.md
+.nojekyll

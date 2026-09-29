@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.shaadiparrot.app",
+      "sha256_cert_fingerprints": [
+        "DF:58:4C:65:A4:F8:1A:8B:82:B9:C3:C5:2A:BA:26:66:96:32:0E:0A:08:E3:79:66:D1:E2:5D:DA:3B:E0:97:ED"
+      ]
+    }
+  }
+]

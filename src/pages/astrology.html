@@ -1,0 +1,92 @@
+<!--{"title": "Vedic astrology in Shaadi Parrot — daily horoscope, nakshatras, library", "desc": "See which nakshatra the Moon is in right now, get a daily Vedic horoscope at 7:30 AM IST and read 190 plain-English articles on Jyotish, Guna Milan, doshas and dashas.", "nav": "astrology", "scripts": ["moon.js", "nak-data.js", "library-data.js", "site.js"]}-->
+<!--hero-->
+<picture class="sky" aria-hidden="true">
+  <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
+  <img src="assets/img/hero-sky-m.webp" alt="" width="1080" height="1920">
+</picture>
+<div class="page-hero wrap">
+  <div class="ph-copy">
+    <h1>Vedic astrology</h1>
+    <p class="lead">Moon and nakshatra first, sidereal zodiac, Lahiri ayanamsa. A daily horoscope for your love life and a library for the curious.</p>
+    <div class="cta-row ph-cta"><a class="btn" href="#moon-title">Tonight’s Moon</a><a class="btn btn-ghost" href="#lib-title">The library</a></div>
+  </div>
+  <img class="ph-art" src="assets/img/mithu_telescope.webp" width="640" height="679" alt="">
+</div>
+<!--/hero-->
+
+<section class="moon" aria-labelledby="moon-title">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="wrap moon-grid">
+    <div class="moon-disc"><img data-moon-img src="assets/img/naks/rohini.webp" width="256" height="256" alt=""></div>
+    <div class="moon-copy">
+      <p class="kicker">Right now · sidereal, Lahiri</p>
+      <h2 id="moon-title">The Moon is in <span data-moon-name>Rohini</span></h2>
+      <p class="moon-line" data-moon-line>A soft day for honest talks and small romantic gestures.</p>
+      <p class="moon-next" data-moon-next>&nbsp;</p>
+      <p class="muted">Calculated live in your browser from the Moon’s position. Your personal horoscope in the app also uses your own birth details.</p>
+    </div>
+  </div>
+</section>
+
+<section class="moon moon-grid-sec" aria-labelledby="naks-title">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <h2 id="naks-title" style="margin-bottom:6px">The 27 nakshatras</h2>
+    <p class="muted" style="margin-bottom:14px">Tap any nakshatra to see its symbol, ruling planet and character.</p>
+<!--include:nak-grid-->
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="how-title">
+  <div class="wrap split">
+    <div>
+      <div class="sec-head">
+        <h2 id="how-title">Your horoscope, every morning</h2>
+        <p>At 7:30 AM IST, Mithu sends a short reading built from where the Moon is today and your own nakshatra. It is written for your love life: what to say, what to skip, when to make a move.</p>
+      </div>
+      <div class="push">
+        <img src="assets/img/logo.webp" width="44" height="44" alt="">
+        <div>
+          <p class="push-top"><b>Shaadi Parrot</b> · 7:30 AM</p>
+          <p class="push-title">Your horoscope for today</p>
+          <p class="push-body">Moon in <span data-moon-name>Rohini</span>. <span data-moon-line>A soft day for honest talks and small romantic gestures.</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>How we read the sky</h3>
+      <ul class="ticks">
+        <li>Sidereal zodiac with the Lahiri ayanamsa, as in most Indian panchangs</li>
+        <li>The Moon and your birth nakshatra come first</li>
+        <li>Your birth date is enough to start; add birth time and place for more precision</li>
+        <li>Parrot AI also answers astrology questions in chat</li>
+      </ul>
+      <p class="note">Astrology in Shaadi Parrot is for fun and reflection. It never decides who you can talk to.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-blush" aria-labelledby="lib-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="lib-title">The Astrology Library</h2>
+      <p>190 plain-English articles in 15 sections, written for people who grew up hearing about kundlis and doshas but never had them explained. Start reading free in the app; Parrot+ opens every section.</p>
+    </div>
+<!--include:astro-library-->
+  </div>
+</section>
+
+<section class="finale" aria-labelledby="finale-title">
+  <picture class="sky" aria-hidden="true">
+    <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
+    <img src="assets/img/hero-sky-m.webp" alt="" width="1080" height="1920" loading="lazy">
+  </picture>
+  <div class="wrap finale-inner">
+    <img class="finale-mithu" src="assets/img/mithu_telescope.webp" width="640" height="679" alt="" loading="lazy">
+    <h2 id="finale-title"><span class="t-plum">Your first reading,</span> <span class="t-rose">tomorrow 7:30</span></h2>
+    <p>Download Shaadi Parrot, add your birth date, and your first horoscope arrives the next morning.</p>
+    <a class="play-badge" href="https://play.google.com/store/apps/details?id=com.shaadiparrot.app" target="_blank" rel="noopener">
+      <svg aria-hidden="true"><use href="#play"/></svg><span><small>Get it on</small>Google Play</span>
+    </a>
+  </div>
+</section>
