@@ -57,7 +57,7 @@ The root `*.html` pages (except the tests) are **generated**:
 - The web result shows the label, where you sit on the scale, the summary, one strength and one real-life line.
 - The rest of the app's result (behaviours, blind spots, more real-life moments, tips) appears as a locked card with "Unlock it free in the app".
 - After that come "Compare with a friend on WhatsApp" and the "Three fates are waiting" card, both linking to Google Play.
-- The app's test result screen has a "Share with a friend" button (`Views/TestResultPage.xaml`) that sends `https://www.shaadiparrot.com/tests/<id>.html?r=<code>`.
+- The app's test result screen has a "Share with a friend" button (`Views/TestResultPage.xaml`) that sends `https://www.shaadiparrot.com/tests/<id>-<code>.html` (one static page per result, so chat previews show the result).
 
 ## Type
 

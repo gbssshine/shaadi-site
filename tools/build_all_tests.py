@@ -21,7 +21,7 @@ import os
 
 from PIL import Image, ImageDraw
 
-from build_tests import font, gradient, text_center, wrap, PLUM, ROSE, INK2
+from og import test_card, result_card
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://www.shaadiparrot.com"
@@ -89,17 +89,7 @@ PAGE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>/* Screen height, measured once: phone browsers resize the viewport while their toolbars hide and show, and sizes tied to it made the page jump. It updates only on rotation (or any resize on desktop). */(function(){{var d=document.documentElement,w=innerWidth;function s(){{d.style.setProperty("--vh1",innerHeight/100+"px")}}s();addEventListener("resize",function(){{if(innerWidth!==w||!matchMedia("(pointer:coarse)").matches){{w=innerWidth;s()}}}});addEventListener("orientationchange",function(){{setTimeout(function(){{w=innerWidth;s()}},350)}})}})();</script>
-<title>{title} test — Parrot Tests</title>
-<meta name="description" content="{subtitle}. {n} statements, about 2 minutes. Find out {measures}.">
-<meta name="theme-color" content="#F47A85">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Parrot Tests">
-<meta property="og:title" content="{title}: take the 2-minute test">
-<meta property="og:description" content="{subtitle}. What do you get?">
-<meta property="og:image" content="{site}/assets/share/og-test-{id}.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:url" content="{site}/tests/{id}.html">
+{meta}
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/webp" href="../assets/img/logo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,30 +156,37 @@ PAGE = """<!doctype html>
 MORE_ITEM = '      <a href="{href}"><img src="../assets/img/{img}" width="200" height="200" alt="" loading="lazy"><div><b>{title}</b><span>{sub}</span></div></a>'
 
 
-def og_image(t, cat_title):
-    W, H = 1200, 630
-    img = gradient(W, H, (246, 122, 133), (253, 214, 176)).convert("RGBA")
-    d = ImageDraw.Draw(img)
-    d.rounded_rectangle((40, 40, W - 40, H - 40), radius=48, fill=(255, 250, 247))
-    sticker = Image.open(os.path.join(HERE, "assets", "img", "tests", ART[t["category"]] + ".webp")).convert("RGBA")
-    sticker.thumbnail((210, 210))
-    img.alpha_composite(sticker, (W - 40 - 60 - sticker.width, 80))
-    mithu = Image.open(os.path.join(HERE, "assets", "img", "mithu_pencil.webp")).convert("RGBA")
-    mithu.thumbnail((250, 300))
-    img.alpha_composite(mithu, (W - 40 - 30 - mithu.width, H - 40 - mithu.height))
-    x = 100
-    d.text((x, 92), cat_title + " test", font=font("bold", 32), fill=INK2)
-    y = 140
-    for line in wrap(d, t["title"], font("display", 104), 720)[:2]:
-        d.text((x, y), line, font=font("display", 104), fill=ROSE)
-        y += 104
-    y += 12
-    for line in wrap(d, t["subtitle"], font("display", 46), 720)[:2]:
-        d.text((x, y), line, font=font("display", 46), fill=PLUM)
-        y += 54
-    d.text((x, H - 120), "8 statements · 2 minutes · What do you get?", font=font("semi", 28), fill=INK2)
-    d.text((x, H - 80), "Parrot Tests", font=font("display", 34), fill=ROSE)
-    return img.convert("RGB")
+RESULT_CODES = ["vh", "h", "m", "l", "vl", "u"]
+
+
+def head_meta(t, n, code=None, label=None):
+    """<head> tags. A result page (tests/<id>-<code>.html) previews the friend's result in chat apps."""
+    tid, title, sub = t["id"], e(t["title"]), e(t["subtitle"])
+    if code:
+        url, img = f"{SITE}/tests/{tid}-{code}.html", f"{SITE}/assets/share/og-test-{tid}-{code}.jpg"
+        og_title = f"A friend got “{e(label)}” in {title}. What will you get?"
+        page_title = og_title
+        extra = [f'<meta name="robots" content="noindex">', f'<link rel="canonical" href="{SITE}/tests/{tid}.html">']
+    else:
+        url, img = f"{SITE}/tests/{tid}.html", f"{SITE}/assets/share/og-test-{tid}.jpg"
+        og_title = f"{title}: take the 2-minute test"
+        page_title = f"{title} test"
+        extra = []
+    tags = [
+        f"<title>{page_title} — Parrot Tests</title>",
+        f'<meta name="description" content="{sub}. {n} statements, about 2 minutes. Find out {e(t["measures"])}.">',
+        *extra,
+        '<meta name="theme-color" content="#F47A85">',
+        '<meta property="og:type" content="website">',
+        '<meta property="og:site_name" content="Parrot Tests">',
+        f'<meta property="og:title" content="{og_title}">',
+        f'<meta property="og:description" content="{sub}. {n} statements, 2 minutes. What do you get?">',
+        f'<meta property="og:image" content="{img}">',
+        '<meta property="og:image:width" content="1200">',
+        '<meta property="og:image:height" content="630">',
+        f'<meta property="og:url" content="{url}">',
+    ]
+    return "\n".join(tags)
 
 
 def main():
@@ -205,15 +202,21 @@ def main():
                                  title=e(by_id[i]["title"]), sub=e(by_id[i]["subtitle"])) for i in more_tests(t, by_id)]
         more.append(MORE_ITEM.format(href="love-bird.html", img="birds/swan.webp", title="Which love bird are you?",
                                      sub="12 birds · 8 questions"))
-        js = json.dumps(page_data(t, cats, by_id), ensure_ascii=False).replace("</", "<\\/")
-        page = PAGE.format(id=t["id"], title=e(t["title"]), subtitle=e(t["subtitle"]), n=len(t["questions"]),
-                           measures=e(t["measures"]), description=e(t["description"]), art=ART[t["category"]],
-                           cat=e(cats[t["category"]]["title"]), more="\n".join(more), data=js, site=SITE,
-                           learn=e(t["whatYouLearn"]), why=e(t["howItHelpsMatch"]))
-        with open(os.path.join(HERE, "tests", t["id"] + ".html"), "w", encoding="utf-8", newline="\n") as f:
-            f.write(page)
-        og_image(t, cats[t["category"]]["title"]).save(
-            os.path.join(HERE, "assets", "share", f"og-test-{t['id']}.jpg"), quality=82, optimize=True)
+        data = page_data(t, cats, by_id)
+        cat_title = cats[t["category"]]["title"]
+        common = dict(id=t["id"], title=e(t["title"]), subtitle=e(t["subtitle"]), n=len(t["questions"]),
+                      description=e(t["description"]), art=ART[t["category"]], cat=e(cat_title),
+                      more="\n".join(more), site=SITE, learn=e(t["whatYouLearn"]), why=e(t["howItHelpsMatch"]))
+        # the test page, plus one page per result so a shared result previews "A friend got …"
+        variants = [(None, None, t["id"])] + [(c, data["bands"][c]["label"], f"{t['id']}-{c}") for c in RESULT_CODES]
+        for code, label, fname in variants:
+            d2 = dict(data, friend=code) if code else data
+            js = json.dumps(d2, ensure_ascii=False).replace("</", "<\\/")
+            page = PAGE.format(meta=head_meta(t, len(t["questions"]), code, label), data=js, **common)
+            with open(os.path.join(HERE, "tests", fname + ".html"), "w", encoding="utf-8", newline="\n") as f:
+                f.write(page)
+            card = result_card(t, cat_title, label) if code else test_card(t, cat_title)
+            card.save(os.path.join(HERE, "assets", "share", f"og-test-{fname}.jpg"), quality=74, optimize=True, progressive=True)
 
     # the old hand-made texting page now forwards to the generated one
     with open(os.path.join(HERE, "tests", "texting-style.html"), "w", encoding="utf-8", newline="\n") as f:

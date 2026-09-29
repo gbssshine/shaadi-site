@@ -15,6 +15,7 @@ import os
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 from love_bird import BIRDS, QUESTIONS
+from og import bird_card, quiz_card
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FONTS = os.path.join(HERE, "tools", "fonts")
@@ -220,13 +221,13 @@ def main():
     os.makedirs(pages, exist_ok=True)
     for bid, b in BIRDS.items():
         share_card(bid, b).save(os.path.join(share, f"love-bird-{bid}.jpg"), quality=88, optimize=True)
-        og_card(bid, b).save(os.path.join(share, f"og-love-bird-{bid}.jpg"), quality=86, optimize=True)
+        bird_card(bid, b).save(os.path.join(share, f"og-love-bird-{bid}.jpg"), quality=86, optimize=True)
         e = lambda s: html.escape(s, quote=True)
         page = PAGE.format(id=bid, name=e(b["name"]), tagline=e(b["tagline"]), love=e(b["love"]), tint=b["tint"],
                            traits="".join(f"<li>{e(t)}</li>" for t in b["traits"]), site=SITE)
         with open(os.path.join(pages, f"{bid}.html"), "w", encoding="utf-8", newline="\n") as f:
             f.write(page)
-    og_quiz().save(os.path.join(share, "og-love-bird.jpg"), quality=86, optimize=True)
+    quiz_card().save(os.path.join(share, "og-love-bird.jpg"), quality=86, optimize=True)
     print(f"built data, {len(BIRDS)} share cards, {len(BIRDS)} result pages")
 
 

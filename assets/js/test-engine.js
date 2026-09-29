@@ -22,7 +22,7 @@
 
   // friend's result from a shared link
   var params = new URLSearchParams(location.search);
-  var friend = params.get("r");
+  var friend = params.get("r") || T.friend;
   var banner = document.querySelector("[data-friend]");
   if (banner && friend && T.bands[friend]) {
     banner.innerHTML = "<span>A friend got</span><b>" + esc(T.bands[friend].label) + "</b><span>Take the test and compare.</span>";
@@ -68,7 +68,7 @@
   function result() {
     var r = classify(), b = T.bands[r.code];
     var pos = Math.round((r.avg - 1) / 4 * 100);
-    var url = T.site + "/tests/" + T.id + ".html?r=" + r.code;
+    var url = T.site + "/tests/" + T.id + "-" + r.code + ".html";
     var text = "Found this test on insta 🦜 I got “" + b.label + "” in " + T.title + ". What do you get?";
     var locked = b.locked.filter(function (l) { return l[1] > 0; });
     show(

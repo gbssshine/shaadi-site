@@ -21,7 +21,7 @@ SIZES = [(360, 740), (375, 667), (390, 844), (412, 915)]
 
 CHECK = r"""(vw) => {
   const out = [];
-  const inRail = el => el.closest('.rail, [aria-labelledby="tips-title"] .split, .tb-grid, .tb-chips, .lib, .nak-grid, .sheet, .dock, .nav-links');
+  const inRail = el => el.closest('.quick, .rail, [aria-labelledby="tips-title"] .split, .tb-grid, .tb-chips, .lib, .nak-grid, .sheet, .dock, .nav-links');
   const name = el => (el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/).slice(0,2).join('.') : '')
      + (el.textContent ? ' "' + el.textContent.trim().slice(0, 30) + '"' : ''));
   const doc = document.documentElement;
