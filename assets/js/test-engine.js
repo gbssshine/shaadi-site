@@ -3,7 +3,7 @@
    Scoring mirrors the app (Services/TestResults/AnswerAnalysis.cs): answers 5..1, reverse items flipped,
    average → VeryHigh ≥ 4.25, High ≥ 3.5, VeryLow ≤ 1.75, Low ≤ 2.5, else Undecided (≥ half neutral) or Moderate.
    A result page (tests/<id>-<code>.html, or ?r=<code>) shows the friend's full result above the test.
-   Free (listed) tests show the full result; the others show a teaser with the rest locked. */
+   The first test on a device shows the full result; later ones open fully after a share on WhatsApp. */
 (function () {
   var T = window.TEST;
   var card = document.querySelector("[data-test]");
@@ -36,19 +36,6 @@
       return '<section class="res-sec ' + s[2] + '"><h3>' + esc(title) + "</h3>" + list(b[s[0]]) + "</section>";
     }).join("");
   }
-  function lockedCard(b) {
-    var rows = [["How you are in love", (b.behaviors || []).length], ["Your blind spots", (b.weaknesses || []).length],
-                ["More real-life moments", Math.max(0, (b.real || []).length - 1)], ["Mithu’s tips for you", (b.tips || []).length]]
-      .filter(function (l) { return l[1] > 0; });
-    if (!rows.length) return "";
-    return '<div class="locked">' +
-      '<p class="locked-head"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2.5" fill="#C42F40"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="#C42F40" stroke-width="2"/></svg>The rest of your result is in the app</p>' +
-      '<ul class="locked-list">' + rows.map(function (l) {
-        return "<li><b>" + esc(l[0]) + "</b><span>" + l[1] + (l[1] === 1 ? " insight" : " insights") + "</span><i></i><i></i></li>";
-      }).join("") + "</ul>" +
-      '<a class="btn" href="' + PLAY + '" target="_blank" rel="noopener">Unlock it free in the app</a></div>';
-  }
-
   // ---------- a friend's shared result: shown in full above the test ----------
   var params = new URLSearchParams(location.search);
   var friend = params.get("r") || T.friend;
@@ -102,24 +89,58 @@
     return { avg: avg, code: code };
   }
 
-  // ---------- share: on phones send the result card picture itself, so the image always arrives ----------
-  function setupShare(root, imgPath, text, url) {
-    var btn = root.querySelector("[data-share]");
-    var file = null;
-    var canFiles = !!(navigator.canShare && window.File && window.fetch);
-    if (!btn) return;
-    if (!canFiles) { btn.remove(); return; }
-    fetch(imgPath).then(function (r) { if (!r.ok) throw 0; return r.blob(); }).then(function (blob) {
-      var f = new File([blob], "my-result.jpg", { type: "image/jpeg" });
-      if (navigator.canShare({ files: [f] })) file = f; else btn.remove();
-    }).catch(function () { btn.remove(); });
-    btn.addEventListener("click", function () {
-      if (!file) return;
-      navigator.share({ files: [file], text: text + " " + url }).catch(function () {});
-    });
+  // ---------- share-to-unlock: the first test on this device shows the full result;
+  //            after that, a share on WhatsApp opens each full result (remembered on the device) ----------
+  var UNLOCK = {
+    isFull: function (id) {
+      try {
+        var first = localStorage.getItem("pt_first");
+        if (!first) { localStorage.setItem("pt_first", id); return true; }
+        var un = JSON.parse(localStorage.getItem("pt_unlocked") || "[]");
+        return first === id || un.indexOf(id) >= 0;
+      } catch (e) { return true; }   // no storage (private mode etc.): never lock
+    },
+    unlock: function (id) {
+      try {
+        var un = JSON.parse(localStorage.getItem("pt_unlocked") || "[]");
+        if (un.indexOf(id) < 0) { un.push(id); localStorage.setItem("pt_unlocked", JSON.stringify(un)); }
+      } catch (e) {}
+    }
+  };
+  var LOCK_SVG = '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2.5" fill="currentColor"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+  function lockBlock(previewHtml) {
+    return '<div class="unlock">' +
+      '<div class="unlock-preview" aria-hidden="true">' + previewHtml + "</div>" +
+      '<div class="unlock-card">' +
+        '<p class="unlock-head">' + LOCK_SVG + "Your full result is ready</p>" +
+        "<p>Share this test with a friend on WhatsApp to open all of it: how you are in love, your strengths, blind spots and Mithu’s tips.</p>" +
+        '<button class="btn btn-wa" type="button" data-unlock>Share on WhatsApp to unlock</button>' +
+        '<p class="unlock-note">Your first test is always free. After that, one share opens each full result.</p>' +
+      "</div></div>";
   }
 
-  function result() {
+  // phones: share the result card picture itself (with the text), so the image always arrives
+  function prefetchFile(imgPath) {
+    var holder = { file: null };
+    if (!(navigator.canShare && window.File && window.fetch)) return holder;
+    fetch(imgPath).then(function (r) { if (!r.ok) throw 0; return r.blob(); }).then(function (blob) {
+      var f = new File([blob], "my-result.jpg", { type: "image/jpeg" });
+      if (navigator.canShare({ files: [f] })) holder.file = f;
+    }).catch(function () {});
+    return holder;
+  }
+  function shareNow(holder, text, url, wa, onShared) {
+    function viaWhatsApp() { window.open(wa, "_blank", "noopener"); if (onShared) setTimeout(onShared, 1200); }
+    if (holder.file) {
+      navigator.share({ files: [holder.file], text: text + " " + url })
+        .then(function () { if (onShared) onShared(); })
+        .catch(function (e) { if (!(e && e.name === "AbortError")) viaWhatsApp(); });
+    } else {
+      viaWhatsApp();
+    }
+  }
+
+  function result(justUnlocked) {
     var r = classify(), b = T.bands[r.code];
     var pos = Math.round((r.avg - 1) / 4 * 100);
     var url = T.site + "/tests/" + T.id + "-" + r.code + ".html";
@@ -127,22 +148,19 @@
     var summary = (b.summaries || [""])[0];
     var text = "Found this test on insta 🦜 I got “" + b.label + "” in " + T.title + ". " + summary + " What do you get?";
     var wa = "https://wa.me/?text=" + encodeURIComponent(text + " " + url);
-    var body = T.open
-      ? fullSections(b, true)
-      : ((b.strengths && b.strengths[0] ? '<div class="res-box res-good"><div><span>Your strength</span><p>' + esc(b.strengths[0]) + "</p></div></div>" : "") +
-         (b.real && b.real[0] ? '<div class="res-box"><div><span>In real life</span><p>' + esc(b.real[0]) + "</p></div></div>" : "") +
-         lockedCard(b));
+    var full = UNLOCK.isFull(T.id);
     show(
       '<div class="result" style="display:grid;gap:12px;justify-items:center;width:100%">' +
+        (justUnlocked ? '<p class="unlocked-note">Unlocked. Thanks for sharing!</p>' : "") +
         '<p class="pt-kicker">' + esc(T.title) + " · your result</p>" +
         '<h2 class="res-name res-name-sm" tabindex="-1">' + esc(b.label) + "</h2>" +
         '<div class="meter-big"><span class="q-bar q-bar-dot"><i style="width:' + pos + '%"></i></span>' +
           "<p><span>" + esc(T.low) + "</span><span>" + esc(T.high) + "</span></p></div>" +
         '<p class="res-love">' + esc(summary) + "</p>" +
-        body +
+        (full ? fullSections(b, true) : lockBlock(fullSections(b, true))) +
         '<div class="share-row">' +
-          '<button class="btn" type="button" data-share>Share my result</button>' +
-          '<a class="btn btn-wa" href="' + wa + '" target="_blank" rel="noopener">Send on WhatsApp</a>' +
+          (full ? '<button class="btn" type="button" data-share hidden>Share my result</button>' +
+                  '<a class="btn btn-wa" href="' + wa + '" target="_blank" rel="noopener">Send on WhatsApp</a>' : "") +
           '<button class="link-btn" type="button" data-again>Take the test again</button>' +
         "</div>" +
         '<div class="fate-tease">' +
@@ -153,7 +171,18 @@
         "</div>" +
       "</div>"
     );
-    setupShare(card, img, text, url);
+    var holder = prefetchFile(img);
+    var shareBtn = card.querySelector("[data-share]");
+    if (shareBtn) {
+      // the picture button appears only where the phone can share files
+      var t0 = setInterval(function () { if (holder.file) { shareBtn.hidden = false; clearInterval(t0); } }, 300);
+      setTimeout(function () { clearInterval(t0); }, 8000);
+      shareBtn.addEventListener("click", function () { shareNow(holder, text, url, wa, null); });
+    }
+    var unlockBtn = card.querySelector("[data-unlock]");
+    if (unlockBtn) unlockBtn.addEventListener("click", function () {
+      shareNow(holder, text, url, wa, function () { UNLOCK.unlock(T.id); result(true); });
+    });
     card.querySelector(".res-name").focus({ preventScroll: true });
     card.querySelector("[data-again]").addEventListener("click", function () { answers = []; question(0); });
   }

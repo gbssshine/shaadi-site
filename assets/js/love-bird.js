@@ -66,16 +66,31 @@
     return "Found this test on insta 🦜 I’m a " + b.name + ", what are you?";
   }
 
-  function result(id, fresh) {
+  // share-to-unlock (same rule and storage as the other tests): the first test on this device is free,
+  // after that a share on WhatsApp opens the full result
+  var UNLOCK = {
+    isFull: function (id) {
+      try {
+        var first = localStorage.getItem("pt_first");
+        if (!first) { localStorage.setItem("pt_first", id); return true; }
+        var un = JSON.parse(localStorage.getItem("pt_unlocked") || "[]");
+        return first === id || un.indexOf(id) >= 0;
+      } catch (e) { return true; }
+    },
+    unlock: function (id) {
+      try {
+        var un = JSON.parse(localStorage.getItem("pt_unlocked") || "[]");
+        if (un.indexOf(id) < 0) { un.push(id); localStorage.setItem("pt_unlocked", JSON.stringify(un)); }
+      } catch (e) {}
+    }
+  };
+
+  function result(id, fresh, justUnlocked) {
     var b = D.birds[id], m = D.birds[b.match];
     var url = D.site + "/tests/love-bird/" + id + ".html";
     var wa = "https://wa.me/?text=" + encodeURIComponent(shareText(b) + " " + url);
-    card.style.setProperty("--tint", b.tint);
-    show(
-      '<div class="result" style="display:grid;gap:12px;justify-items:center;width:100%">' +
-        '<div class="res-art"><img src="' + IMG + id + '.webp" width="480" height="480" alt=""></div>' +
-        '<h2 class="res-name" tabindex="-1"><small>You’re a</small>' + esc(b.name) + "</h2>" +
-        '<p class="res-tag">' + esc(b.tagline) + "</p>" +
+    var full = UNLOCK.isFull("love-bird");
+    var details =
         '<ul class="res-traits">' + b.traits.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>" +
         '<p class="res-love">' + esc(b.love) + "</p>" +
         '<div class="res-duo">' +
@@ -83,15 +98,32 @@
             '<img src="' + IMG + b.match + '.webp" width="480" height="480" alt="">' +
             "<div><span>Best match</span><b>" + esc(m.name) + "</b><p>" + esc(b.why) + "</p></div></a>" +
           '<div class="res-box res-flag"><div><span>Red flag</span><p>' + esc(b.flag) + "</p></div></div>" +
-        "</div>" +
+        "</div>";
+    var locked =
+        '<div class="unlock"><div class="unlock-preview" aria-hidden="true">' + details + "</div>" +
+        '<div class="unlock-card">' +
+          '<p class="unlock-head"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2.5" fill="currentColor"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="currentColor" stroke-width="2"/></svg>Your full bird is ready</p>' +
+          "<p>Share this test with a friend on WhatsApp to see your three traits, your best match and your red flag.</p>" +
+          '<button class="btn btn-wa" type="button" data-unlock>Share on WhatsApp to unlock</button>' +
+          '<p class="unlock-note">Your first test is always free. After that, one share opens each full result.</p>' +
+        "</div></div>";
+    card.style.setProperty("--tint", b.tint);
+    show(
+      '<div class="result" style="display:grid;gap:12px;justify-items:center;width:100%">' +
+        (justUnlocked ? '<p class="unlocked-note">Unlocked. Thanks for sharing!</p>' : "") +
+        '<div class="res-art"><img src="' + IMG + id + '.webp" width="480" height="480" alt=""></div>' +
+        '<h2 class="res-name" tabindex="-1"><small>You\u2019re a</small>' + esc(b.name) + "</h2>" +
+        '<p class="res-tag">' + esc(b.tagline) + "</p>" +
+        (full ? details : locked) +
         '<div class="share-row">' +
-          '<button class="btn" type="button" data-share>Share my bird</button>' +
-          '<a class="btn btn-wa" href="' + wa + '" target="_blank" rel="noopener">Send on WhatsApp</a>' +
-          '<div class="share-2">' +
-            '<a class="btn btn-soft" href="../assets/share/love-bird-' + id + '.jpg" download="love-bird-' + id + '.jpg">Save image</a>' +
-            '<button class="btn btn-soft" type="button" data-copy>Copy link</button>' +
-          "</div>" +
-          '<p class="copied" data-copied></p>' +
+          (full ?
+            '<button class="btn" type="button" data-share hidden>Share my bird</button>' +
+            '<a class="btn btn-wa" href="' + wa + '" target="_blank" rel="noopener">Send on WhatsApp</a>' +
+            '<div class="share-2">' +
+              '<a class="btn btn-soft" href="../assets/share/love-bird-' + id + '.jpg" download="love-bird-' + id + '.jpg">Save image</a>' +
+              '<button class="btn btn-soft" type="button" data-copy>Copy link</button>' +
+            "</div>" +
+            '<p class="copied" data-copied></p>' : "") +
           '<button class="link-btn" type="button" data-again>Take the test again</button>' +
         "</div>" +
         '<div class="fate-tease">' +
@@ -102,10 +134,21 @@
         "</div>" +
       "</div>"
     );
-    setupShare("../assets/share/love-bird-" + id + ".jpg", shareText(b) + " " + url);
+    var holder = prefetchFile("../assets/share/love-bird-" + id + ".jpg");
+    var shareBtn = card.querySelector("[data-share]");
+    if (shareBtn) {
+      var t0 = setInterval(function () { if (holder.file) { shareBtn.hidden = false; clearInterval(t0); } }, 300);
+      setTimeout(function () { clearInterval(t0); }, 8000);
+      shareBtn.addEventListener("click", function () { shareNow(holder, shareText(b) + " " + url, wa, null); });
+    }
+    var unlockBtn = card.querySelector("[data-unlock]");
+    if (unlockBtn) unlockBtn.addEventListener("click", function () {
+      shareNow(holder, shareText(b) + " " + url, wa, function () { UNLOCK.unlock("love-bird"); result(id, false, true); });
+    });
     card.querySelector(".res-name").focus({ preventScroll: true });
     card.querySelector("[data-again]").addEventListener("click", function () { answers = []; history.replaceState(null, "", location.pathname); question(0); });
-    card.querySelector("[data-copy]").addEventListener("click", function () {
+    var copy = card.querySelector("[data-copy]");
+    if (copy) copy.addEventListener("click", function () {
       var note = card.querySelector("[data-copied]");
       var text = shareText(b) + " " + url;
       if (navigator.clipboard && window.isSecureContext) {
@@ -120,15 +163,24 @@
   }
 
   // on phones: share the result card picture itself (with the text), so the image always arrives
-  function setupShare(imgPath, text) {
-    var btn = card.querySelector("[data-share]"), file = null;
-    if (!btn) return;
-    if (!(navigator.canShare && window.File && window.fetch)) { btn.remove(); return; }
+  function prefetchFile(imgPath) {
+    var holder = { file: null };
+    if (!(navigator.canShare && window.File && window.fetch)) return holder;
     fetch(imgPath).then(function (r) { if (!r.ok) throw 0; return r.blob(); }).then(function (blob) {
       var f = new File([blob], "my-love-bird.jpg", { type: "image/jpeg" });
-      if (navigator.canShare({ files: [f] })) file = f; else btn.remove();
-    }).catch(function () { btn.remove(); });
-    btn.addEventListener("click", function () { if (file) navigator.share({ files: [file], text: text }).catch(function () {}); });
+      if (navigator.canShare({ files: [f] })) holder.file = f;
+    }).catch(function () {});
+    return holder;
+  }
+  function shareNow(holder, text, wa, onShared) {
+    function viaWhatsApp() { window.open(wa, "_blank", "noopener"); if (onShared) setTimeout(onShared, 1200); }
+    if (holder.file) {
+      navigator.share({ files: [holder.file], text: text })
+        .then(function () { if (onShared) onShared(); })
+        .catch(function (e) { if (!(e && e.name === "AbortError")) viaWhatsApp(); });
+    } else {
+      viaWhatsApp();
+    }
   }
 
   function markGrid(id) {
