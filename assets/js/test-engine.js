@@ -44,7 +44,7 @@
     var fb = T.bands[friend];
     banner.className = "friend-card";
     banner.innerHTML =
-      '<p class="pt-kicker">' + esc(T.title) + " · a friend’s result</p>" +
+      '<p class="pt-kicker">' + esc(T.title) + " · their result</p>" +
       '<h2 class="res-name res-name-sm">' + esc(fb.label) + "</h2>" +
       '<p class="res-love">' + esc((fb.summaries || [""])[0]) + "</p>" +
       '<details class="friend-more"><summary>See their full result</summary>' + fullSections(fb, false) + "</details>" +

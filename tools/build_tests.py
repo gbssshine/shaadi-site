@@ -186,7 +186,7 @@ PAGE = """<!doctype html>
 </header>
 <main class="pt-main">
   <section class="pt-card result" style="--tint:{tint}">
-    <p class="pt-kicker">A friend got</p>
+    <p class="pt-kicker">Their result</p>
     <div class="res-art"><img src="../../assets/img/birds/{id}.webp" width="480" height="480" alt="{name}"></div>
     <h1 class="res-name"><small>The</small> {name}</h1>
     <p class="res-tag">{tagline}</p>

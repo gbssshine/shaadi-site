@@ -113,7 +113,7 @@ PAGE = """<!doctype html>
     <p class="pt-side-meta"><span>{n} statements</span><span>About 2 minutes</span><span>No sign-up</span></p>
   </aside>
   <div class="pt-flow">
-  <section class="friend-card" data-friend hidden aria-label="A friend’s result"></section>
+  <section class="friend-card" data-friend hidden aria-label="Their result"></section>
   <section class="pt-card" data-test aria-live="polite">
     <div class="res-art pt-intro-art"><img src="../assets/img/tests/{art}.webp" width="200" height="200" alt=""></div>
     <p class="pt-kicker">{cat} · {n} statements · 2 min</p>
@@ -163,7 +163,7 @@ def head_meta(t, n, code=None, label=None):
     tid, title, sub = t["id"], e(t["title"]), e(t["subtitle"])
     if code:
         url, img = f"{SITE}/tests/{tid}-{code}.html", f"{SITE}/assets/share/og-test-{tid}-{code}.jpg"
-        og_title = f"A friend got “{e(label)}” in {title}. What will you get?"
+        og_title = f"Their result: “{e(label)}” in {title}. What will you get?"
         page_title = og_title
         extra = []
     else:
@@ -209,7 +209,7 @@ def main():
         common = dict(id=t["id"], title=e(t["title"]), subtitle=e(t["subtitle"]), n=len(t["questions"]),
                       description=e(t["description"]), art=ART[t["category"]], cat=e(cat_title),
                       more="\n".join(more), site=SITE, learn=e(t["whatYouLearn"]), why=e(t["howItHelpsMatch"]))
-        # the test page, plus one page per result so a shared result previews "A friend got …"
+        # the test page, plus one page per result so a shared result previews "Their result: …"
         variants = [(None, None, t["id"])] + [(c, data["bands"][c]["label"], f"{t['id']}-{c}") for c in RESULT_CODES]
         for code, label, fname in variants:
             d2 = dict(data, friend=code) if code else data

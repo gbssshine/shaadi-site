@@ -1,7 +1,7 @@
 """Link-preview images (1200x630) in the banner's style, for WhatsApp / Instagram / Telegram.
 
   test_card(test, cat_title)            -> preview of a test ("Forgiveness · take the 2-minute test")
-  result_card(test, cat_title, label)   -> preview of a shared result ("A friend got <label>. What will you get?")
+  result_card(test, cat_title, label)   -> preview of a shared result ("Their result: <label>. What will you get?")
   bird_card(bird_id, bird)              -> preview of a love bird result
 """
 import os
@@ -206,7 +206,7 @@ def result_card(t, cat_title, label):
     _right_art(c, os.path.join(IMG, "tests", ART[t["category"]] + ".webp"))
     _, chip = _fit(d, f"{t['title']} · {cat_title} test", "bold", COL - 40, [24, 22, 20], 1)
     _chip(d, (70, 58), chip[0], font("bold", 24 if len(chip[0]) < 40 else 20))
-    y = _lines(c, 70, 128, ["A friend got"], font("bold", 38), fill=PLUM)
+    y = _lines(c, 70, 128, ["Their result:"], font("bold", 38), fill=PLUM)
     size, lines = _fit(d, f"“{label}”", "brand", COL, [100, 90, 80, 70, 62, 56], 2)
     y = _lines(c, 64, y + 10, lines, font("brand", size), gap=12)
     y = _lines(c, 70, y + 12, ["What will you get?"], font("brand", 52), fill=PLUM)
@@ -222,7 +222,7 @@ def bird_card(bid, b):
     _paste(c, bird, (W - bird.width - 70, (H - bird.height) // 2 - 10))
     _hearts(c)
     _chip(d, (70, 60), "Which love bird are you?", font("bold", 26))
-    y = _lines(c, 70, 128, ["A friend is a"], font("bold", 40), fill=PLUM)
+    y = _lines(c, 70, 128, ["Their bird:"], font("bold", 40), fill=PLUM)
     y = _lines(c, 64, y + 14, [b["name"]], font("brand", 124 if len(b["name"]) < 9 else 100))
     size, lines = _fit(d, b["tagline"], "bold", W - bird.width - 150, [42, 38, 34], 2)
     y = _lines(c, 70, y + 18, lines, font("bold", size), fill=PLUM, gap=12)
