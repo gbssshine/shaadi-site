@@ -12,6 +12,7 @@ import re
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(HERE, "src")
 PLAY = "https://play.google.com/store/apps/details?id=com.shaadiparrot.app"
+HOME_LD = '<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Shaadi Parrot","alternateName":["ShaadiParrot","Shaadi Parrot dating app"],"url":"https://www.shaadiparrot.com/","inLanguage":"en-IN"}</script>\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Shaadi Parrot","url":"https://www.shaadiparrot.com/","logo":"https://www.shaadiparrot.com/assets/img/favicon-512.png","email":"support@shaadiparrot.com","sameAs":["https://www.instagram.com/shaadiparrot/","https://www.youtube.com/watch?v=se9izl35Jwk","https://play.google.com/store/apps/details?id=com.shaadiparrot.app"]}</script>\n'
 
 
 def build():
@@ -52,6 +53,9 @@ def build():
         # mark the current section in the nav
         if meta.get("nav"):
             out = out.replace(f'data-nav="{meta["nav"]}"', f'data-nav="{meta["nav"]}" aria-current="page"')
+        # home page: site name and logo for search engines
+        if name == "index.html":
+            out = out.replace("</head>", HOME_LD + "</head>", 1)
         leftover = re.findall(r"\{\{\w+\}\}", out)
         assert not leftover, (name, leftover)
         with open(os.path.join(HERE, name), "w", encoding="utf-8", newline="\n") as f:
