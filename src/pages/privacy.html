@@ -13,7 +13,7 @@
 <!--/hero-->
 <section class="sec sec-legal">
   <div class="wrap prose">
-    <p class="updated">Last updated: 2026-09-29</p>
+    <p class="updated">Last updated: 2026-09-30</p>
 
     <h2>Overview</h2>
     <p>This Privacy Policy explains what data Shaadi Parrot (the “App”) collects, how we use it, and the choices you have. We do not sell your personal information.</p>
@@ -24,20 +24,35 @@
       <li><strong>Profile:</strong> name, date of birth and age, gender, who you’re looking for, photos, bio, interests, languages, lifestyle, relationship goals and, only if you choose, religion and community.</li>
       <li><strong>Astrology:</strong> birth date, and optionally birth time and birth place, used for compatibility, Daily Fates and horoscopes.</li>
       <li><strong>Location:</strong> your device location is used to show distance. Other users only see an approximate distance and your city, never your exact position.</li>
-      <li><strong>Photos and safety checks:</strong> profile photos are checked automatically for safety using image analysis (Google Cloud Vision). If you use selfie verification once it is available, those selfies are kept private and used only to confirm it’s you.</li>
+      <li><strong>Photos and safety checks:</strong> profile photos are checked automatically for safety using image analysis (Google Cloud Vision).</li>
+      <li><strong>Face verification (optional):</strong> photos taken during the face check, and face templates made from them and from your profile photos. See <a href="#face-verification">Face verification</a> below.</li>
       <li><strong>Messages and safety:</strong> chats and reports may be processed to detect abuse, spam, scams and policy violations.</li>
       <li><strong>Parrot AI chat:</strong> messages you send to Parrot, together with the relevant parts of your profile, are sent to our AI provider, DeepSeek, to generate replies. Please don’t share passwords, bank details or other sensitive information with Parrot.</li>
       <li><strong>Usage, device and diagnostics:</strong> which screens you open and key actions (for example swipes, matches and messages sent, but never message text), purchase outcomes, crash reports, device identifiers and notification tokens. These are collected with Google Firebase Analytics and Crashlytics and linked to your account ID so we can fix problems and improve the App.</li>
       <li><strong>Advertising:</strong> we show rewarded ads (which you choose to watch, for example to get a reward) and full-screen interstitial ads through Google AdMob, which uses your device’s advertising ID. You can reset or delete it in Android settings. Parrot+ removes full-screen ads.</li>
     </ul>
 
-    <h2>2. How we use data</h2>
+    <h2 id="face-verification">2. Face verification</h2>
+    <p>Face verification is optional. You need it for the verified badge and for Daily Fates, which brings verified people only to verified people. It happens only with your consent, which you give in the App on the screen before the face check, and you can withdraw it at any time.</p>
+    <ul>
+      <li><strong>What happens:</strong> the front camera opens inside the App. You keep your face in an oval and follow a few moves that change every time (look straight, turn your head, smile), and the App takes three photos by itself.</li>
+      <li><strong>What we collect:</strong> those three photos; face templates, which are numbers that describe a face, made from the check photos and from your profile photos; the match scores; and a record of when you gave and withdrew consent.</li>
+      <li><strong>Why:</strong> to check that a real person was in front of the camera, that you are the person in your profile photos, and that one person has only one verified account (so people we banned can’t come back under a new name). When you change your profile photos, we compare the new ones with your kept check photo, so you stay verified without a new face check.</li>
+      <li><strong>How:</strong> Google Cloud Vision reads the head position and the smile and checks that the photos are safe. The face templates are made and compared by software on our own server on Google Cloud. We don’t use a separate face-recognition company, and we never share face templates.</li>
+      <li><strong>Who sees the check photos:</strong> usually no one. If the automatic check isn’t sure, an authorized member of our team compares your check photo with your profile photos (and, if your face looks like the face on another verified account, with that account’s check photo). Every such look is logged. Other users never see your check photos.</li>
+      <li><strong>How long we keep it:</strong> two of the three photos are deleted right after the check. While you are verified, we keep one straight photo and your face template. If a check doesn’t pass, its photo is deleted within 30 days. The match scores (numbers, no images) are kept until you remove your verification or delete your account.</li>
+      <li><strong>Withdrawing consent:</strong> in the App, open Daily Fates › Settings › Remove my verification. We delete your check photo, your face template and the scores right away, and the verified badge goes. We keep only the record of when you gave and withdrew consent, until you delete your account. Deleting your account deletes all of it.</li>
+      <li><strong>Nothing else:</strong> we don’t use your check photos or face templates for advertising, we don’t sell them, and we don’t use them to recognize you anywhere outside Shaadi Parrot.</li>
+    </ul>
+    <p>Where the law treats face templates as biometric or sensitive personal data, we process them only with your explicit consent.</p>
+
+    <h2>3. How we use data</h2>
     <p>We use data to provide matching, personalize your experience, enable messaging, prevent fraud and abuse, improve performance, and comply with legal obligations.</p>
 
-    <h2>3. Sharing</h2>
+    <h2>4. Sharing</h2>
     <p>We share limited data only with service providers that help operate the App:</p>
     <ul>
-      <li><strong>Google Firebase / Google Cloud:</strong> hosting, sign-in, database, storage, notifications, analytics, crash reports and image safety checks.</li>
+      <li><strong>Google Firebase / Google Cloud:</strong> hosting, sign-in, database, storage, notifications, analytics, crash reports, image safety checks and the face check’s head-position and safety reading.</li>
       <li><strong>Google AdMob:</strong> ads.</li>
       <li><strong>Google Play:</strong> payments.</li>
       <li><strong>DeepSeek:</strong> generating Parrot AI replies.</li>
@@ -46,30 +61,31 @@
     <p>We may disclose information if required by law or to protect users’ safety and rights.</p>
     <p>When you <a href="delete-account.html">delete your account</a>, we delete your profile, photos, likes, matches, chats and settings. Limited records (for example, a one-way hash of your phone number to prevent ban evasion) may be kept for safety.</p>
 
-    <h2>4. Where your data is processed</h2>
+    <h2>5. Where your data is processed</h2>
     <p>Shaadi Parrot is operated by DeLuca Family Universe LLC, a company in the United States. Your data is stored and processed on Google Cloud and Firebase servers in the United States and the European Union. Parrot AI messages are processed by DeepSeek, whose servers may be located outside India, including in China.</p>
     <p>We transfer data outside India only as the law allows, share with each provider only what it needs for its task, and protect your data as described in this policy wherever it is processed.</p>
 
-    <h2>5. Your choices and rights</h2>
+    <h2>6. Your choices and rights</h2>
     <p>You can:</p>
     <ul>
       <li>Edit profile information in the App.</li>
-      <li>Adjust permissions (for example, location) in your device settings.</li>
+      <li>Adjust permissions (for example, location or camera) in your device settings.</li>
+      <li>Remove your face verification in Daily Fates › Settings.</li>
       <li>Request account deletion in Settings. See <a href="delete-account.html">how to delete your account</a>.</li>
     </ul>
     <p>Depending on your region, you may have additional rights such as access, correction and deletion.</p>
 
-    <h2>6. Retention</h2>
-    <p>We keep data only as long as necessary for providing the service, safety, and legal compliance. Some records may be retained for fraud prevention and dispute resolution where permitted by law.</p>
+    <h2>7. Retention</h2>
+    <p>We keep data only as long as necessary for providing the service, safety, and legal compliance. Face verification data is kept as described in <a href="#face-verification">Face verification</a>. Some records may be retained for fraud prevention and dispute resolution where permitted by law.</p>
 
-    <h2>7. Children</h2>
+    <h2>8. Children</h2>
     <p>The App is not for anyone under 18. If you believe a minor is using the App, report their profile in the App or write to <a href="mailto:support@shaadiparrot.com?subject=Grievance">support@shaadiparrot.com</a> right away.</p>
 
-    <h2>8. Grievances and your rights in India</h2>
+    <h2>9. Grievances and your rights in India</h2>
     <p>If you are in India, the Digital Personal Data Protection Act, 2023 gives you the right to access a summary of your data, correct or update it, have it erased, withdraw consent and nominate someone to exercise these rights for you. You can edit your profile in the App and delete your account in <a href="delete-account.html">Settings › Delete my account</a>.</p>
     <p>For any other request or complaint about your data, write to our Grievance Officer, Arsen Khasiev, at <a href="mailto:support@shaadiparrot.com?subject=Privacy%20grievance">support@shaadiparrot.com</a> with the subject “Privacy grievance”. We acknowledge requests within 24 hours and aim to resolve them within 15 days. If you are not satisfied with our response, you may complain to the Data Protection Board of India.</p>
 
-    <h2>9. Contact</h2>
+    <h2>10. Contact</h2>
     <p>Questions? Contact us at <a href="mailto:support@shaadiparrot.com">support@shaadiparrot.com</a>.</p>
     <p><strong>Company:</strong> DeLuca Family Universe LLC (operator of Shaadi Parrot)<br><strong>Governing law:</strong> the laws of India for users in India; the laws of the United States for everyone else. Nothing in this policy limits the rights you have under the law where you live.</p>
   </div>
