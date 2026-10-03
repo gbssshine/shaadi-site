@@ -12,7 +12,7 @@ import re
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(HERE, "src")
 PLAY = "https://play.google.com/store/apps/details?id=com.shaadiparrot.app"
-HOME_LD = '<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Shaadi Parrot","alternateName":["ShaadiParrot","Shaadi Parrot dating app"],"url":"https://www.shaadiparrot.com/","inLanguage":"en-IN"}</script>\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Shaadi Parrot","url":"https://www.shaadiparrot.com/","logo":"https://www.shaadiparrot.com/assets/img/favicon-512.png","email":"support@shaadiparrot.com","sameAs":["https://www.instagram.com/shaadiparrot/","https://www.youtube.com/watch?v=se9izl35Jwk","https://play.google.com/store/apps/details?id=com.shaadiparrot.app"]}</script>\n'
+HOME_LD = '<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Shaadi Parrot","alternateName":["ShaadiParrot","Shaadi Parrot dating app"],"url":"https://www.shaadiparrot.com/","inLanguage":"en-IN"}</script>\n<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Shaadi Parrot","url":"https://www.shaadiparrot.com/","logo":"https://www.shaadiparrot.com/assets/img/favicon-512.png","email":"support@shaadiparrot.com","sameAs":["https://www.instagram.com/shaadiparrot/","https://www.youtube.com/@ShaadiParrot","https://play.google.com/store/apps/details?id=com.shaadiparrot.app"]}</script>\n'
 
 
 def build():
