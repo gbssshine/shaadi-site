@@ -63,7 +63,7 @@
   }
 
   function shareText(b) {
-    return "Found this test on insta 🦜 I’m a " + b.name + ", what are you?";
+    return "I got the " + b.name + " in “Which love bird are you?” 🦜 Your turn, let’s compare!";
   }
 
   // share-to-unlock (same rule and storage as the other tests): the first test on this device is free,
@@ -88,7 +88,7 @@
   function result(id, fresh, justUnlocked) {
     var b = D.birds[id], m = D.birds[b.match];
     var url = D.site + "/tests/love-bird/" + id + ".html";
-    var wa = "https://wa.me/?text=" + encodeURIComponent(shareText(b) + " " + url);
+    var wa = "https://wa.me/?text=" + encodeURIComponent(shareText(b) + "\n" + url);
     var full = UNLOCK.isFull("love-bird");
     var details =
         '<ul class="res-traits">' + b.traits.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>" +
@@ -139,18 +139,18 @@
     if (shareBtn) {
       var t0 = setInterval(function () { if (holder.file) { shareBtn.hidden = false; clearInterval(t0); } }, 300);
       setTimeout(function () { clearInterval(t0); }, 8000);
-      shareBtn.addEventListener("click", function () { shareNow(holder, shareText(b) + " " + url, wa, null); });
+      shareBtn.addEventListener("click", function () { shareNow(holder, shareText(b) + "\n" + url, wa, null); });
     }
     var unlockBtn = card.querySelector("[data-unlock]");
     if (unlockBtn) unlockBtn.addEventListener("click", function () {
-      shareNow(holder, shareText(b) + " " + url, wa, function () { UNLOCK.unlock("love-bird"); result(id, false, true); });
+      shareNow(holder, shareText(b) + "\n" + url, wa, function () { UNLOCK.unlock("love-bird"); result(id, false, true); });
     });
     card.querySelector(".res-name").focus({ preventScroll: true });
     card.querySelector("[data-again]").addEventListener("click", function () { answers = []; history.replaceState(null, "", location.pathname); question(0); });
     var copy = card.querySelector("[data-copy]");
     if (copy) copy.addEventListener("click", function () {
       var note = card.querySelector("[data-copied]");
-      var text = shareText(b) + " " + url;
+      var text = shareText(b) + "\n" + url;
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(function () { note.textContent = "Link copied. Paste it anywhere."; },
           function () { note.textContent = url; });

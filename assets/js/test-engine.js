@@ -132,7 +132,7 @@
   function shareNow(holder, text, url, wa, onShared) {
     function viaWhatsApp() { window.open(wa, "_blank", "noopener"); if (onShared) setTimeout(onShared, 1200); }
     if (holder.file) {
-      navigator.share({ files: [holder.file], text: text + " " + url })
+      navigator.share({ files: [holder.file], text: text + "\n" + url })
         .then(function () { if (onShared) onShared(); })
         .catch(function (e) { if (!(e && e.name === "AbortError")) viaWhatsApp(); });
     } else {
@@ -146,8 +146,9 @@
     var url = T.site + "/tests/" + T.id + "-" + r.code + ".html";
     var img = "../assets/share/og-test-" + T.id + "-" + r.code + ".jpg";
     var summary = (b.summaries || [""])[0];
-    var text = "Found this test on insta 🦜 I got “" + b.label + "” in " + T.title + ". " + summary + " What do you get?";
-    var wa = "https://wa.me/?text=" + encodeURIComponent(text + " " + url);
+    // one true line + the link on its own line, the same words as the app (Services/TestShare.Text.cs)
+    var text = "I got “" + b.label + "” in the " + T.title + " test 🦜 Your turn, let’s compare!";
+    var wa = "https://wa.me/?text=" + encodeURIComponent(text + "\n" + url);
     var full = UNLOCK.isFull(T.id);
     show(
       '<div class="result" style="display:grid;gap:12px;justify-items:center;width:100%">' +
