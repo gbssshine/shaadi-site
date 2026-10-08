@@ -15,5 +15,6 @@
     <Compile Include="..\..\..\MauiApp2\MauiApp2\Services\TestsContentService.cs" Link="App\TestsContentService.cs" />
     <Compile Include="..\..\..\MauiApp2\MauiApp2\Services\TestsScoringService.cs" Link="App\TestsScoringService.cs" />
     <Compile Include="..\..\..\MauiApp2\MauiApp2\Services\TestResults\*.cs" LinkBase="App\TestResults" />
+    <Compile Include="..\..\..\MauiApp2\MauiApp2\Services\TestContent\*.cs" LinkBase="App\TestContent" />
   </ItemGroup>
 </Project>

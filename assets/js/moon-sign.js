@@ -1,6 +1,6 @@
 /* Find your rashi: birth date (and time) -> Moon sign and nakshatra (astro-core.js), with the library's words. */
 (function () {
-  var A = window.Astro, S = window.ToolShare, N = window.NAK_DATA || {};
+  var A = window.Astro, S = window.ToolShare, N = window.NAK_DATA || {}, LOVE = window.NAK_LOVE || {};
   var form = document.querySelector("[data-rashi-form]");
   var out = document.querySelector("[data-result]");
   if (!A || !form || !out) return;
@@ -59,7 +59,7 @@
   }
 
   function render(m, segs, birth) {
-    var r = A.RASHIS[m.rashi], k = A.NAKS[m.nak], info = N[k[0]] || {};
+    var r = A.RASHIS[m.rashi], k = A.NAKS[m.nak], info = N[k[0]] || {}, love = LOVE[k[0]] || {};
     var url = S.SITE + "/moon-sign/" + k[0] + ".html";
     var text = "My rashi is " + r[0] + " " + r[4] + " and my nakshatra is " + k[1] + " 🌙 What’s yours? Mithu finds it free 🦜\n" + url;
     last = { m: m, r: r, k: k, text: text, cardP: null };
@@ -81,6 +81,8 @@
           '<p class="rashi-en">' + r[1] + " Moon · ruled by " + r[2] + "</p>" +
           '<div class="moon-card nak-big"><img src="assets/img/naks/' + k[0] + '.webp" width="160" height="160" alt="">' +
             "<div><span>Your nakshatra</span><b>" + k[1] + "</b><small>" + (m.timed ? "Pada " + m.pada + " · " : "") + k[2] + " gana · " + k[4] + " yoni</small></div></div>" +
+          (love.traits ? '<ul class="trait-chips">' + love.traits.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>" : "") +
+          (love.love ? '<p class="mithu-says"><img src="assets/img/logo.webp" width="40" height="40" alt=""><span><b>In love:</b> ' + esc(love.love) + "</span></p>" : "") +
           choose +
           '<div class="share-box">' +
             '<button class="btn btn-wa btn-big" type="button" data-share>Share on WhatsApp</button>' +
@@ -117,15 +119,33 @@
       draw: function (c, q) {
         var cx = q.W / 2;
         c.textAlign = "center";
-        c.fillStyle = "#FFE3DA"; c.beginPath(); c.arc(cx, 400, 150, 0, 7); c.fill();
-        c.fillStyle = q.ROSE; c.font = '700 170px "Segoe UI Symbol", "Noto Sans Symbols 2", "Apple Symbols", sans-serif'; c.fillText(r[4], cx, 462);
-        c.fillStyle = q.PLUM; c.font = '800 112px "Baloo 2"'; c.fillText(r[0], cx, 680);
-        c.font = '700 36px "Plus Jakarta Sans"'; c.fillStyle = q.PLUM2; c.fillText(r[1] + " Moon", cx, 732);
-        q.rr(c, 150, 800, q.W - 300, 220, 40); c.fillStyle = "#FFF1EA"; c.fill();
-        if (q.img.nak) c.drawImage(q.img.nak, 190, 830, 160, 160);
-        c.textAlign = "left"; c.fillStyle = q.PLUM2; c.font = '700 30px "Plus Jakarta Sans"'; c.fillText("My nakshatra", 380, 878);
-        c.fillStyle = q.ROSE; c.font = '800 ' + q.fit(c, k[1], '800 {s}px "Baloo 2"', 84, 520) + 'px "Baloo 2"'; c.fillText(k[1], 380, 960);
-        c.fillStyle = q.PLUM; c.font = '600 30px "Plus Jakarta Sans"'; c.fillText(k[2] + " gana · " + k[4] + " yoni", 380, 1000);
+        // rashi
+        c.fillStyle = "#FFE3DA"; c.beginPath(); c.arc(cx, 330, 104, 0, 7); c.fill();
+        c.fillStyle = q.ROSE; c.font = '700 120px "Segoe UI Symbol", "Noto Sans Symbols 2", "Apple Symbols", sans-serif'; c.fillText(r[4], cx, 372);
+        c.fillStyle = q.PLUM; c.font = '800 100px "Baloo 2"'; c.fillText(r[0], cx, 540);
+        c.font = '700 32px "Plus Jakarta Sans"'; c.fillStyle = q.PLUM2; c.fillText(r[1] + " Moon · ruled by " + r[2], cx, 588);
+        // nakshatra
+        q.rr(c, 120, 630, q.W - 240, 200, 36); c.fillStyle = "#FFF1EA"; c.fill();
+        if (q.img.nak) c.drawImage(q.img.nak, 150, 650, 160, 160);
+        c.textAlign = "left"; c.fillStyle = q.PLUM2; c.font = '700 28px "Plus Jakarta Sans"'; c.fillText("My nakshatra", 336, 700);
+        c.fillStyle = q.ROSE; c.font = '800 ' + q.fit(c, k[1], '800 {s}px "Baloo 2"', 80, 560) + 'px "Baloo 2"'; c.fillText(k[1], 336, 776);
+        c.fillStyle = q.PLUM; c.font = '600 28px "Plus Jakarta Sans"'; c.fillText(k[2] + " gana · " + k[4] + " yoni" + (love.lord ? " · " + love.lord : ""), 336, 814);
+        // three traits
+        if (love.traits) {
+          c.font = '800 30px "Plus Jakarta Sans"';
+          var ws = love.traits.map(function (t) { return c.measureText(t).width + 48; });
+          var tot = ws.reduce(function (a, b) { return a + b; }, 0) + 16 * (ws.length - 1), x = cx - tot / 2;
+          love.traits.forEach(function (t, i) {
+            q.rr(c, x, 862, ws[i], 60, 30); c.fillStyle = "#FFE3DA"; c.fill();
+            c.fillStyle = q.ROSE; c.textAlign = "left"; c.fillText(t, x + 24, 902); x += ws[i] + 16;
+          });
+        }
+        // the love line
+        if (love.love) {
+          c.textAlign = "center"; c.fillStyle = q.ROSE; c.font = '800 28px "Plus Jakarta Sans"'; c.fillText("IN LOVE", cx, 980);
+          c.fillStyle = q.PLUM; c.font = '600 36px "Plus Jakarta Sans"';
+          q.wrap(c, love.love, 800).slice(0, 2).forEach(function (ln, i) { c.fillText(ln, cx, 1030 + i * 48); });
+        }
       }
     });
     out.querySelector("[data-share]").addEventListener("click", function () { last.cardP.then(function (b) { S.share(b, "my-rashi.jpg", last.text); }); });

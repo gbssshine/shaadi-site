@@ -13,6 +13,7 @@ import os
 from PIL import Image, ImageDraw
 
 from og import font, _img, _sky, _paste, _fit, _lines, _chip, _button, _hearts, IMG, W, H, PLUM
+from nak_love import NAK_LOVE, symbols
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SHARE = os.path.join(HERE, "assets", "share")
@@ -62,27 +63,52 @@ def ring(c, cx, cy, r, frac, width=34, label=None, sub=None):
     c.alpha_composite(big, (cx - big.width // 2, cy - big.height // 2))
     dd = ImageDraw.Draw(c)
     if label:
-        f = font("brand", 132 if len(label) <= 3 else 112)
+        f = font("brand", int(r * (0.8 if len(label) <= 2 else 0.66 if len(label) <= 3 else 0.56)))
         l, t, rr, b = f.getbbox(label)
-        dd.text((cx - (rr - l) / 2 - l, cy - (b - t) / 2 - t - 18), label, font=f, fill=PLUM)
+        dd.text((cx - (rr - l) / 2 - l, cy - (b - t) / 2 - t - r * 0.12), label, font=f, fill=PLUM)
     if sub:
-        f = font("bold", 26)
-        dd.text((cx - dd.textlength(sub, font=f) / 2, cy + 50), sub, font=f, fill=INK2)
+        f = font("bold", max(18, int(r * 0.16)))
+        dd.text((cx - dd.textlength(sub, font=f) / 2, cy + r * 0.36), sub, font=f, fill=INK2)
+
+
+def band_line(s):
+    if s > 32:
+        return "A rare score: above 32 of 36."
+    if s >= 25:
+        return "25 and up is a very good match."
+    if s >= 18:
+        return "Above 18, the usual minimum for a match."
+    return "Under the usual 18. Plenty of couples still shine."
+
+
+def polaroid(person, angle):
+    card = Image.new("RGBA", (250, 300), (0, 0, 0, 0))
+    d = ImageDraw.Draw(card)
+    d.rounded_rectangle((0, 0, 249, 299), radius=18, fill=(255, 251, 249))
+    ph = Image.open(os.path.join(IMG, "people", person + ".webp")).convert("RGBA")
+    ph = ph.resize((222, round(ph.height * 222 / ph.width)), Image.LANCZOS).crop((0, 0, 222, 230))
+    m = Image.new("L", ph.size, 0)
+    ImageDraw.Draw(m).rounded_rectangle((0, 0, 221, 229), radius=12, fill=255)
+    card.paste(ph, (14, 14), m)
+    return card.rotate(angle, resample=Image.BICUBIC, expand=True)
 
 
 def og_match(score):
     c = _sky()
     d = ImageDraw.Draw(c)
-    mithu = _img(os.path.join(IMG, "mithu_heart.webp"), (240, 300))
-    ring(c, 905, 300, 165, score / 36, label=num(score), sub="of 36 gunas")
-    _paste(c, mithu, (W - mithu.width - 6, H - mithu.height + 10))
+    _paste(c, polaroid("aarav", 7), (676, 34))
+    _paste(c, polaroid("ananya", -6), (884, 48))
+    ring(c, 890, 440, 118, score / 36, width=26, label=num(score), sub="of 36 gunas")
+    mithu = _img(os.path.join(IMG, "mithu_heart.webp"), (140, 176))
+    _paste(c, mithu, (W - mithu.width - 4, H - mithu.height + 6))
     _hearts(c)
-    _chip(d, (70, 64), "Kundli match", font("bold", 26))
-    y = _lines(c, 70, 138, ["Our score:"], font("bold", 44), fill=PLUM, gap=10)
-    size, lines = _fit(d, band(score), "brand", 600, [104, 92, 80, 70], 2)
-    y = _lines(c, 66, y + 14, lines, font("brand", size), gap=12)
-    _lines(c, 70, y + 14, [f"{num(score)} of 36 gunas in Guna Milan"], font("bold", 32), fill=PLUM)
-    _button(c, (70, 470), "Check yours with your crush")
+    _chip(d, (70, 58), "Kundli match · Guna Milan", font("bold", 26))
+    y = _lines(c, 70, 126, ["Our score:"], font("bold", 40), fill=PLUM, gap=10)
+    size, lines = _fit(d, band(score), "brand", 600, [100, 90, 80, 70], 2)
+    y = _lines(c, 66, y + 12, lines, font("brand", size), gap=10)
+    y = _lines(c, 70, y + 16, [f"{num(score)} of 36 gunas"], font("bold", 36), fill=PLUM, gap=8)
+    _lines(c, 70, y + 8, [band_line(score)], font("semi", 28), fill=INK2)
+    _button(c, (70, 520), "Check yours with your crush")
     return c.convert("RGB")
 
 
@@ -106,28 +132,49 @@ def og_tool(title, sub, button, art, mithu_file, extra=None):
     return c.convert("RGB")
 
 
-def og_nak(i):
+def og_nak(i, sym):
     key, name = NAKS[i], NAK_NAMES[i]
+    traits, love, lord, gana, animal = NAK_LOVE[key]
     span = 360 / 27
     signs = sorted({int(i * span // 30), int(((i + 1) * span - 1e-9) // 30)})
     rashi = " / ".join(RASHIS[s][0] for s in signs)
     c = _sky()
     d = ImageDraw.Draw(c)
-    card = Image.new("RGBA", (330, 360), (0, 0, 0, 0))
-    ImageDraw.Draw(card).rounded_rectangle((0, 0, 329, 359), radius=36, fill=(255, 251, 249))
-    st = _img(os.path.join(IMG, "naks", key + ".webp"), (250, 250))
-    card.alpha_composite(st, ((330 - st.width) // 2, 40))
+    # the sticker on a tilted card, its symbol under it
+    card = Image.new("RGBA", (300, 340), (0, 0, 0, 0))
+    cd = ImageDraw.Draw(card)
+    cd.rounded_rectangle((0, 0, 299, 339), radius=34, fill=(255, 251, 249))
+    st = _img(os.path.join(IMG, "naks", key + ".webp"), (230, 230))
+    card.alpha_composite(st, ((300 - st.width) // 2, 22))
+    symbol = sym.get(key, "").split(";")[0].split(", or")[0]
+    sf = font("semi", 21)
+    sl = _fit(cd, "Symbol: " + symbol, "semi", 262, [21, 19, 17], 2)[1]
+    yy = 262
+    for line in sl:
+        cd.text((150 - cd.textlength(line, font=font("semi", 19)) / 2, yy), line, font=font("semi", 19), fill=INK2)
+        yy += 24
     card = card.rotate(-5, resample=Image.BICUBIC, expand=True)
-    _paste(c, card, (740, 70))
-    m = _img(os.path.join(IMG, "mithu_telescope.webp"), (250, 270))
-    _paste(c, m, (W - m.width - 10, H - m.height - 4))
+    _paste(c, card, (790, 36))
+    m = _img(os.path.join(IMG, "mithu_telescope.webp"), (190, 205))
+    _paste(c, m, (W - m.width - 6, H - m.height - 2))
     _hearts(c)
-    _chip(d, (70, 64), "My Moon sign", font("bold", 26))
-    y = _lines(c, 70, 138, ["My nakshatra is"], font("bold", 42), fill=PLUM)
-    size, lines = _fit(d, name, "brand", 620, [124, 108, 94, 80], 2)
-    y = _lines(c, 66, y + 12, lines, font("brand", size), gap=10)
-    _lines(c, 70, y + 12, [f"{rashi} rashi"], font("bold", 34), fill=PLUM)
-    _button(c, (70, 470), "Find your rashi, free")
+
+    _chip(d, (70, 50), "My Moon sign", font("bold", 26))
+    y = _lines(c, 70, 112, ["My nakshatra is"], font("bold", 36), fill=PLUM)
+    size, lines = _fit(d, name, "brand", 640, [116, 104, 92, 80, 70, 62], 1)
+    y = _lines(c, 66, y + 8, lines, font("brand", size), gap=8)
+    y = _lines(c, 70, y + 10, [f"{rashi} rashi · ruled by {lord}"], font("bold", 30), fill=PLUM)
+    # three traits as pills
+    x, py, f = 70, y + 18, font("bold", 26)
+    for t in traits:
+        box = _chip(d, (x, py), t, f, bg=(255, 250, 247), fg=(196, 47, 64))
+        x = box[2] + 12
+    y = py + f.size + 18 + 22
+    y = _lines(c, 70, y, ["In love"], font("bold", 24), fill=(196, 47, 64))
+    ls = _fit(d, love, "semi", 660, [30, 28, 26], 2)
+    y = _lines(c, 70, y + 6, ls[1], font("semi", ls[0]), fill=PLUM, gap=8)
+    _lines(c, 70, y + 8, [f"{gana} gana · {animal} yoni"], font("semi", 24), fill=INK2)
+    _button(c, (70, 528), "What’s yours? Find out free")
     return c.convert("RGB"), rashi
 
 
@@ -190,7 +237,9 @@ NAK_BODY = """  <section class="score-card rashi-card">
     <p class="kicker">Their nakshatra</p>
     <img class="nak-sticker" src="../assets/img/naks/{key}.webp" width="256" height="256" alt="">
     <h1 class="score-band">{name}</h1>
-    <p class="rashi-en">{rashi} rashi</p>
+    <p class="rashi-en">{rashi} rashi · ruled by {lord}</p>
+    <ul class="trait-chips">{traits}</ul>
+    <p class="mithu-says"><img src="../assets/img/logo.webp" width="40" height="40" alt=""><span><b>In love:</b> {love}</span></p>
     {hook}
     <a class="btn btn-big" href="../moon-sign.html">Find your rashi</a>
     <p class="tool-note">Your birth date · 10 seconds · nothing leaves your phone</p>
@@ -231,11 +280,15 @@ def main():
 
     os.makedirs(os.path.join(HERE, "moon-sign"), exist_ok=True)
     data = nak_data()
+    sym = symbols()
     for i, key in enumerate(NAKS):
-        img, rashi = og_nak(i)
+        img, rashi = og_nak(i, sym)
         img.save(os.path.join(SHARE, f"og-nak-{key}.jpg"), quality=84, optimize=True)
         hook = data.get(key, {}).get("hook", "")
-        body = NAK_BODY.format(key=key, name=NAK_NAMES[i], rashi=e(rashi), hook=f'<p class="nak-hook">{e(hook)}</p>' if hook else "")
+        traits, love, lord, gana, animal = NAK_LOVE[key]
+        body = NAK_BODY.format(key=key, name=NAK_NAMES[i], rashi=e(rashi), lord=lord, love=e(love),
+                               traits="".join(f"<li>{e(t)}</li>" for t in traits),
+                               hook=f'<p class="nak-hook">{e(hook)}</p>' if hook else "")
         page = PAGE.format(title=f"{NAK_NAMES[i]} nakshatra, {rashi} rashi — Find your rashi", ogtitle=f"My nakshatra is {NAK_NAMES[i]} 🌙 What’s yours?",
                            desc=f"{NAK_NAMES[i]} nakshatra in {rashi} rashi. Find your own Moon sign and nakshatra from your birth date, free.",
                            site=SITE, path=f"moon-sign/{key}.html", og=f"og-nak-{key}.jpg", body=body)
