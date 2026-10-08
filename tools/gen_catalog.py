@@ -18,6 +18,7 @@ CAT_ART = {
     "jealousy": "t_jealousy", "family_focus": "t_family", "long_term": "t_longterm",
 }
 LIB_ART = {
+    "start": "a_foundations", "stories": "a_spirituality",   # beginners' section and the myths (app: Mithu art)
     "foundations": "a_foundations", "planets": "a_planets", "zodiac": "a_zodiac", "houses": "a_houses",
     "nakshatras": "a_nakshatras", "love": "a_love", "matching": "a_kundli", "doshas": "a_doshas",
     "dasha": "a_dasha", "career": "a_career", "spirituality": "a_spirituality", "remedies": "a_remedies",

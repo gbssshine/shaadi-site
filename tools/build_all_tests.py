@@ -58,6 +58,8 @@ def page_data(t, cats, tests_by_id):
         b = t["bands"][level]
         bands[code] = {
             "label": b["label"],
+            "emoji": b.get("emoji", ""),
+            "match": b.get("match", []),
             "summaries": b["summaries"],
             "behaviors": b["behaviors"],
             "strengths": b["strengths"],
@@ -67,9 +69,12 @@ def page_data(t, cats, tests_by_id):
         }
     return {
         "id": t["id"], "title": t["title"], "site": SITE, "open": t["id"] in OPEN,
-        "q": [[q["text"], 1 if q["reverse"] else 0] for q in t["questions"]],
+        # v2 questions carry their own answers: [text, 0, [[answer, value], …]]
+        "q": [[q["text"], 1 if q["reverse"] else 0] + ([[[o["text"], o["value"]] for o in q["options"]]] if q.get("options") else [])
+              for q in t["questions"]],
         "bands": bands,
-        "low": t["bands"]["VeryLow"]["label"], "high": t["bands"]["VeryHigh"]["label"],
+        "low": t.get("lowPole") if t.get("v2") else t["bands"]["VeryLow"]["label"],
+        "high": t.get("highPole") if t.get("v2") else t["bands"]["VeryHigh"]["label"],
     }
 
 
@@ -110,13 +115,13 @@ PAGE = """<!doctype html>
     <p class="pt-kicker">{cat} test</p>
     <h2>{title}</h2>
     <dl class="pt-facts"><div><dt>What you’ll learn</dt><dd>{learn}</dd></div><div><dt>Why it matters</dt><dd>{why}</dd></div></dl>
-    <p class="pt-side-meta"><span>{n} statements</span><span>About 2 minutes</span><span>No sign-up</span></p>
+    <p class="pt-side-meta"><span>{n} questions</span><span>About 2 minutes</span><span>No sign-up</span></p>
   </aside>
   <div class="pt-flow">
   <section class="friend-card" data-friend hidden aria-label="Their result"></section>
   <section class="pt-card" data-test aria-live="polite">
     <div class="res-art pt-intro-art"><img src="../assets/img/tests/{art}.webp" width="200" height="200" alt=""></div>
-    <p class="pt-kicker">{cat} · {n} statements · 2 min</p>
+    <p class="pt-kicker">{cat} · {n} questions · 2 min</p>
     <h1>{title}</h1>
     <p class="pt-lead">{description}</p>
     <button class="btn pt-start" type="button" data-start>Start the test</button>
@@ -173,13 +178,13 @@ def head_meta(t, n, code=None, label=None):
         extra = []
     tags = [
         f"<title>{page_title} — Parrot Tests</title>",
-        f'<meta name="description" content="{sub}. {n} statements, about 2 minutes. Find out {e(t["measures"])}.">',
+        f'<meta name="description" content="{sub}. {n} questions, about 2 minutes. Find out {e(t["measures"])}.">',
         *extra,
         '<meta name="theme-color" content="#F47A85">',
         '<meta property="og:type" content="website">',
         '<meta property="og:site_name" content="Parrot Tests">',
         f'<meta property="og:title" content="{og_title}">',
-        f'<meta property="og:description" content="{sub}. {n} statements, 2 minutes. What do you get?">',
+        f'<meta property="og:description" content="{sub}. {n} questions, 2 minutes. What do you get?">',
         f'<meta property="og:image" content="{img}">',
         f'<meta property="og:image:secure_url" content="{img}">',
         '<meta property="og:image:type" content="image/jpeg">',

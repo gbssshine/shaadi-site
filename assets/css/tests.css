@@ -257,3 +257,8 @@ body.pt {
 .unlock-card .btn { width: 100%; }
 .unlock-note { font-size: .78rem; color: var(--plum-2); }
 .unlocked-note { padding: 8px 14px; border-radius: 99px; background: #EAF6E7; color: #2F6B24; font-weight: 700; font-size: .88rem; }
+
+/* tests v2: a two-answer question shows as "this or that" cards; the type's emoji above its name */
+.q-pair { grid-template-columns: 1fr 1fr; }
+.q-pair .q-opt { min-height: 110px; display: grid; place-items: center; text-align: center; }
+.res-emoji { display: block; font-size: 2.6rem; line-height: 1.1; margin-bottom: 4px; }

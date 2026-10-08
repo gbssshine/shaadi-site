@@ -27,6 +27,7 @@
     ["strengths", "Your strengths", "sec-good"],
     ["weaknesses", "Your blind spots", "sec-warn"],
     ["real", "In real life", "sec-real"],
+    ["match", "Who you click with", "sec-good"],
     ["tips", "Mithu’s tips for you", "sec-tips"]
   ];
   function list(items) { return "<ul>" + items.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>"; }
@@ -45,7 +46,7 @@
     banner.className = "friend-card";
     banner.innerHTML =
       '<p class="pt-kicker">' + esc(T.title) + " · their result</p>" +
-      '<h2 class="res-name res-name-sm">' + esc(fb.label) + "</h2>" +
+      '<h2 class="res-name res-name-sm">' + (fb.emoji ? '<span class="res-emoji">' + esc(fb.emoji) + "</span>" : "") + esc(fb.label) + "</h2>" +
       '<p class="res-love">' + esc((fb.summaries || [""])[0]) + "</p>" +
       '<details class="friend-more"><summary>See their full result</summary>' + fullSections(fb, false) + "</details>" +
       '<button class="btn pt-start" type="button" data-start-friend>What will you get? Take the test</button>';
@@ -55,17 +56,19 @@
 
   function question(i) {
     var q = T.q[i];
+    // tests v2: the question's own answers ([text, value]); old statements: the agree/disagree scale
+    var opts = q[2] || SCALE, pair = opts.length === 2;
     show(
       '<div class="q-top">' +
         '<button class="q-back" type="button" data-back aria-label="Previous statement"' + (i === 0 ? " disabled" : "") + '>' +
         '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="#41213E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
         '<div class="q-progress"><b>' + (i + 1) + " / " + T.q.length + '</b><span class="q-bar"><i style="width:' + Math.round(i / T.q.length * 100) + '%"></i></span></div><span></span>' +
       "</div>" +
-      '<p class="pt-kicker">How true is this for you?</p>' +
+      '<p class="pt-kicker">' + (q[2] ? "What would you do?" : "How true is this for you?") + "</p>" +
       '<h2 class="q-text" tabindex="-1">' + esc(q[0]) + "</h2>" +
-      '<div class="q-opts" role="group" aria-label="How true is this for you?">' +
-        SCALE.map(function (s) {
-          return '<button class="q-opt q-center' + (answers[i] === s[1] ? " picked" : "") + '" type="button" data-v="' + s[1] + '">' + s[0] + "</button>";
+      '<div class="q-opts' + (pair ? " q-pair" : "") + '" role="group" aria-label="Answers">' +
+        opts.map(function (s) {
+          return '<button class="q-opt' + (q[2] && !pair ? "" : " q-center") + (answers[i] === s[1] ? " picked" : "") + '" type="button" data-v="' + s[1] + '">' + esc(s[0]) + "</button>";
         }).join("") +
       "</div>"
     );
@@ -113,7 +116,7 @@
       '<div class="unlock-preview" aria-hidden="true">' + previewHtml + "</div>" +
       '<div class="unlock-card">' +
         '<p class="unlock-head">' + LOCK_SVG + "Your full result is ready</p>" +
-        "<p>Share this test with a friend on WhatsApp to open all of it: how you are in love, your strengths, blind spots and Mithu’s tips.</p>" +
+        "<p>Share this test on WhatsApp to open all of it: how you are in love, your strengths, blind spots, who you click with and Mithu’s tips.</p>" +
         '<button class="btn btn-wa" type="button" data-unlock>Share on WhatsApp to unlock</button>' +
         '<p class="unlock-note">Your first test is always free. After that, one share opens each full result.</p>' +
       "</div></div>";
@@ -154,7 +157,7 @@
       '<div class="result" style="display:grid;gap:12px;justify-items:center;width:100%">' +
         (justUnlocked ? '<p class="unlocked-note">Unlocked. Thanks for sharing!</p>' : "") +
         '<p class="pt-kicker">' + esc(T.title) + " · your result</p>" +
-        '<h2 class="res-name res-name-sm" tabindex="-1">' + esc(b.label) + "</h2>" +
+        '<h2 class="res-name res-name-sm" tabindex="-1">' + (b.emoji ? '<span class="res-emoji">' + esc(b.emoji) + "</span>" : "") + esc(b.label) + "</h2>" +
         '<div class="meter-big"><span class="q-bar q-bar-dot"><i style="width:' + pos + '%"></i></span>' +
           "<p><span>" + esc(T.low) + "</span><span>" + esc(T.high) + "</span></p></div>" +
         '<p class="res-love">' + esc(summary) + "</p>" +
