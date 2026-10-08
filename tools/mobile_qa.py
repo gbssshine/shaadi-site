@@ -16,7 +16,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 PAGES = ["index.html", "how-it-works.html", "tests.html", "astrology.html", "parrot-plus.html", "safety.html",
          "about.html", "help.html", "privacy.html", "terms.html", "delete-account.html",
          "tests/love-bird.html", "tests/communication_texting_style.html", "tests/values_loyalty.html",
-         "tests/love-bird/owl.html"]
+         "tests/love-bird/owl.html", "kundli-match.html", "love-today.html", "moon-sign.html", "match/27-5.html",
+         "moon-sign/rohini.html"]
 SIZES = [(360, 740), (375, 667), (390, 844), (412, 915)]
 
 CHECK = r"""(vw) => {

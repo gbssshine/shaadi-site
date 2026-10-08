@@ -110,7 +110,7 @@ Warm, a little cheeky, Indian-English and not filmy. Short sentences. It talks l
 
 Rules:
 - Never claim face or ID verification; say "photo checks".
-- Never claim Kundli or Guna Milan matching; the library has articles only.
+- Guna Milan is real now: the app's Daily Fates shows Ashtakoota (36 gunas, 8 kootas, doshas) for every fate, and the site's Kundli match uses the same tables (`assets/js/astro-core.js`, checked by `tools/check_astro.py`). Don't promise more than that (no full kundli reports).
 
 ## Test pages ("Parrot Tests")
 
@@ -185,3 +185,13 @@ What changed:
 - **Instagram button** uses Instagram's own gradient and glyph ("Follow @shaadiparrot on Instagram"), and the YouTube button is red with the play glyph.
 - **The Ek Tarfa cast** stands side by side and never overlaps.
 - **About:** the video and the cast merged into one block; the thin "company" block was dropped (the footer carries it).
+
+## Free tools (Oct 2026)
+
+Three shareable tools, built to be passed around WhatsApp: **Kundli match** (`kundli-match.html`), **Love luck today** (`love-today.html`) and **Find your rashi** (`moon-sign.html`).
+
+- **Where people find them:** the first item in the desktop nav ("Kundli match", with a heart), the first three chips in the phone's quick row and the menu, a "Check your kundli match · FREE" pill under the Play badge on the home hero, an "Ask Mithu right now" block right after the home hero, and blocks on Astrology and Tests.
+- **The tool sits in the hero** on its sky, so the form is the first thing on the phone. One big button per step. Results open below with the share block first.
+- **Sharing:** "Share on WhatsApp" sends a 1080x1350 picture drawn in the browser (names, score, Mithu) with the text and a link through the phone's share sheet; without file sharing it opens WhatsApp with the text. The link goes to a static page per result (`match/<score>.html`, `moon-sign/<nakshatra>.html`) whose preview image shows that result.
+- **Truth:** the maths is the app's (Daily Fates) and the reels' (love luck); `tools/check_astro.py` checks both. No invented numbers. Bands: under 18 "Opposites attract?", 18+ good, 25+ very good, above 32 rare, with the usual-minimum line.
+- **No app dock** on the tool pages: it covered the share buttons. Each page has its own app card.

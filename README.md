@@ -9,6 +9,10 @@ A static site for the Shaadi Parrot Android dating app. It has no server, no fra
 | `index.html` | Home: banner-style hero, the Daily Fates card demo, how it works, features, tests, tonight's Moon, safety, Parrot+, Ek Tarfa, FAQ |
 | `how-it-works.html` | A day with Mithu, inside a fate reading, profile, likes/crowns/boosts, explore |
 | `tests.html` | Test hub: the two web tests and the full list of the app's 90 tests |
+| `kundli-match.html` | Free Kundli match (Guna Milan, 36 gunas) for you and your crush, with a share picture |
+| `love-today.html` | Love luck today: hearts for all 12 rashis from today's Moon (the daily reels' rules) |
+| `moon-sign.html` | Find your rashi: Moon sign and nakshatra from a birth date |
+| `match/<score>.html`, `moon-sign/<nakshatra>.html` | Static pages behind shared tool results, so chat previews show the result |
 | `astrology.html` | Live Moon nakshatra, all 27 nakshatras, horoscope explainer, the Astrology Library |
 | `parrot-plus.html` | Free vs Parrot+, crowns and boosts, billing |
 | `safety.html` | Safety centre, tips, community guidelines (`#guidelines`), reporting |
@@ -42,6 +46,8 @@ The root `*.html` pages (except the tests) are **generated**:
 | `tools/process_art.py` | Generated art (white background) → cut-out WebP in `assets/img/` |
 | `tools/build_assets.py` | Copies and compresses the app's own stickers (tests, astrology, nakshatras, 3D cast) |
 | `tools/shoot.py` | Desktop and phone screenshots into `screenshots/` for review |
+| `tools/build_tools.py` | The tools' link previews and the shared-result pages (`match/`, `moon-sign/`) |
+| `tools/check_astro.py` | Checks `assets/js/astro-core.js` against Swiss Ephemeris, the app's Guna Milan and the reels' love luck |
 
 ## Hosting
 

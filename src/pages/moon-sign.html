@@ -1,0 +1,72 @@
+<!--{"title": "Find your rashi: Moon sign and nakshatra by date of birth — Shaadi Parrot", "desc": "What is my rashi? Enter your birth date and get your Vedic Moon sign (rashi) and nakshatra in seconds, free. Sidereal, Lahiri ayanamsa, like Indian panchangs.", "nav": "rashi", "og": "og-moon-sign.jpg", "scripts": ["astro-core.js", "nak-data.js", "tool-share.js", "moon-sign.js", "site.js"], "head": "<link rel=\"stylesheet\" href=\"assets/css/tools.css\">"}-->
+<!--hero-->
+<picture class="sky" aria-hidden="true">
+  <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
+  <img src="assets/img/hero-sky-m.webp" alt="" width="1080" height="1920">
+</picture>
+<div class="page-hero wrap tool-hero">
+  <div class="ph-copy">
+    <p class="tool-kicker"><svg aria-hidden="true"><use href="#heart"/></svg>Free · 10 seconds</p>
+    <h1>Find your rashi</h1>
+    <p class="lead">Your rashi is your Moon sign, not your sun sign. Enter your birth date and Mithu finds it, with your nakshatra.</p>
+    <img class="tool-mithu" src="assets/img/mithu_telescope.webp" width="640" height="679" alt="">
+  </div>
+
+  <form class="tool-card tool-card-one" data-rashi-form novalidate>
+    <fieldset class="person">
+      <legend class="sr">Your birth details</legend>
+      <div class="field" data-dob>
+        <span class="flabel" id="r-dob">Your birth date</span>
+        <div class="dob" role="group" aria-labelledby="r-dob">
+          <select name="r-d" aria-label="Day" data-day><option value="">Day</option></select>
+          <select name="r-mo" aria-label="Month" data-month><option value="">Month</option></select>
+          <select name="r-y" aria-label="Year" data-year><option value="">Year</option></select>
+        </div>
+        <p class="f-err" data-err hidden>Pick the day, month and year.</p>
+      </div>
+      <details class="time-toggle">
+        <summary>Add birth time <small>if you know it</small></summary>
+        <input class="inp" type="time" name="r-t" aria-label="Your birth time, India time">
+      </details>
+    </fieldset>
+    <button class="btn btn-big" type="submit">Find my rashi</button>
+    <p class="tool-note"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2.5" fill="currentColor"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="currentColor" stroke-width="2"/></svg>Nothing leaves your phone. Birth times are India time (IST).</p>
+    <noscript><p class="tool-note">This needs JavaScript turned on.</p></noscript>
+  </form>
+</div>
+<!--/hero-->
+
+<section class="result-sec" id="result" data-result hidden aria-live="polite"></section>
+
+<section class="sec explain-sec" aria-labelledby="why-title">
+  <div class="wrap explain-grid">
+    <div class="sec-head">
+      <h2 id="why-title">Rashi, nakshatra, sun sign?</h2>
+      <p>Western horoscopes go by the Sun. Indian astrology starts from the Moon: the sign it was in when you were born is your rashi, and the star it was beside is your nakshatra, one of 27.</p>
+      <p>Mithu uses the sidereal zodiac with the Lahiri ayanamsa, like most Indian panchangs. It sits about 24° behind the Western zodiac, so Vedic signs often differ from what Western apps show. The Moon changes sign every two and a half days, so a birth time helps on the days it moves.</p>
+    </div>
+    <div class="rashi-wheel" aria-label="The 12 rashis" data-rashi-list></div>
+  </div>
+</section>
+
+<section class="sec more-sec" aria-labelledby="more-title">
+  <div class="wrap">
+    <div class="sec-head center"><h2 id="more-title">More from Mithu</h2></div>
+<!--include:tools-tiles-->
+  </div>
+</section>
+
+<section class="finale" aria-labelledby="finale-title">
+  <picture class="sky" aria-hidden="true">
+    <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
+    <img src="assets/img/hero-sky-m.webp" alt="" width="1080" height="1920" loading="lazy">
+  </picture>
+  <div class="wrap finale-inner">
+    <img class="finale-mithu" src="assets/img/mithu_wave.webp" width="640" height="860" alt="" loading="lazy">
+    <h2 id="finale-title"><span class="t-plum">Your horoscope,</span> <span class="t-rose">every morning</span></h2>
+    <p>In Shaadi Parrot, Mithu sends a short love reading at 7:30 AM IST, built from today’s Moon and your own nakshatra.</p>
+    <a class="play-badge" href="https://play.google.com/store/apps/details?id=com.shaadiparrot.app" target="_blank" rel="noopener">
+      <svg aria-hidden="true"><use href="#play"/></svg><span><small>Get it on</small>Google Play</span>
+    </a>
+  </div>
+</section>

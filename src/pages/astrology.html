@@ -1,4 +1,4 @@
-<!--{"title": "Vedic astrology in Shaadi Parrot — daily horoscope, nakshatras, library", "desc": "See which nakshatra the Moon is in right now, get a daily Vedic horoscope at 7:30 AM IST and read 190 plain-English articles on Jyotish, Guna Milan, doshas and dashas.", "nav": "astrology", "scripts": ["moon.js", "nak-data.js", "library-data.js", "site.js"]}-->
+<!--{"title": "Vedic astrology in Shaadi Parrot — daily horoscope, nakshatras, library", "desc": "See which nakshatra the Moon is in right now, get a daily Vedic horoscope at 7:30 AM IST and read 190 plain-English articles on Jyotish, Guna Milan, doshas and dashas.", "nav": "astrology", "scripts": ["moon.js", "nak-data.js", "library-data.js", "site.js"], "head": "<link rel=\"stylesheet\" href=\"assets/css/tools.css\">"}-->
 <!--hero-->
 <picture class="sky" aria-hidden="true">
   <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
@@ -8,11 +8,22 @@
   <div class="ph-copy">
     <h1>Vedic astrology</h1>
     <p class="lead">Moon and nakshatra first, sidereal zodiac, Lahiri ayanamsa. A daily horoscope for your love life and a library for the curious.</p>
-    <div class="cta-row ph-cta"><a class="btn" href="#moon-title">Tonight’s Moon</a><a class="btn btn-ghost" href="#lib-title">The library</a></div>
+    <div class="cta-row ph-cta"><a class="btn" href="kundli-match.html">Kundli match</a><a class="btn btn-ghost" href="#moon-title">Tonight’s Moon</a><a class="btn btn-ghost" href="#lib-title">The library</a></div>
   </div>
   <img class="ph-art" src="assets/img/mithu_telescope.webp" width="640" height="679" alt="">
 </div>
 <!--/hero-->
+
+<section class="tools-sec" aria-labelledby="tools-title">
+  <div class="wrap">
+    <div class="sec-head center">
+      <p class="kicker">Free · works right here</p>
+      <h2 id="tools-title">Try it on yourself</h2>
+      <p>Your kundli match with your crush, today’s love luck for your rashi, and your Moon sign and nakshatra from your birth date.</p>
+    </div>
+<!--include:tools-tiles-->
+  </div>
+</section>
 
 <section class="moon" aria-labelledby="moon-title">
   <div class="stars" aria-hidden="true"></div>

@@ -36,6 +36,7 @@ def build():
         out = layout
         for key, val in {
             "title": meta.get("title", "Shaadi Parrot"),
+            "og": meta.get("og", "og-home.jpg"),
             "desc": meta.get("desc", ""),
             "nav": meta.get("nav", ""),
             "topclass": " " + meta["topclass"] if meta.get("topclass") else "",

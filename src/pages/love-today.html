@@ -1,0 +1,52 @@
+<!--{"title": "Love horoscope today: love luck for all 12 rashis — Shaadi Parrot", "desc": "Today’s love luck for every rashi, from the Moon’s position in the Vedic (sidereal) zodiac. Hearts, a one-line reading and the luckiest rashis of the day. New every morning, free.", "nav": "luck", "og": "og-love-today.jpg", "scripts": ["astro-core.js", "tool-share.js", "love-today.js", "site.js"], "head": "<link rel=\"stylesheet\" href=\"assets/css/tools.css\">"}-->
+<!--hero-->
+<picture class="sky" aria-hidden="true">
+  <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
+  <img src="assets/img/hero-sky-m.webp" alt="" width="1080" height="1920">
+</picture>
+<div class="page-hero wrap tool-hero luck-hero">
+  <div class="ph-copy">
+    <p class="tool-kicker" data-luck-date>Today</p>
+    <h1>Love luck today</h1>
+    <p class="lead">Hearts for every rashi, read from today’s Moon. New every morning.</p>
+    <div class="crowned" data-crowned hidden></div>
+    <p class="luck-moon" data-luck-moon></p>
+  </div>
+  <div class="tool-card pick-card">
+    <p class="p-title">Your rashi</p>
+    <div class="rashi-pick" role="group" aria-label="Pick your rashi" data-rashi-pick></div>
+    <p class="tool-note">Don’t know it? <a class="text-link" href="moon-sign.html">Find your rashi in 10 seconds</a></p>
+  </div>
+</div>
+<!--/hero-->
+
+<section class="result-sec luck-sec" aria-labelledby="all-title">
+  <div class="wrap">
+    <div class="my-luck" data-my-luck hidden aria-live="polite"></div>
+    <h2 id="all-title" class="res-h luck-all-title">All 12 rashis today</h2>
+    <ul class="luck-grid" data-luck-grid></ul>
+    <p class="luck-how">How it works: each rashi’s hearts come from the house today’s Moon sits in, counted from that rashi (Chandra gochara), in the sidereal zodiac with the Lahiri ayanamsa. On a day the Moon changes sign, Mithu warns the rashi entering Chandrashtama, its 8th house, and never crowns it.</p>
+  </div>
+</section>
+
+<section class="sec more-sec" aria-labelledby="more-title">
+  <div class="wrap">
+    <div class="sec-head center"><h2 id="more-title">More from Mithu</h2></div>
+<!--include:tools-tiles-->
+  </div>
+</section>
+
+<section class="finale" aria-labelledby="finale-title">
+  <picture class="sky" aria-hidden="true">
+    <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
+    <img src="assets/img/hero-sky-m.webp" alt="" width="1080" height="1920" loading="lazy">
+  </picture>
+  <div class="wrap finale-inner">
+    <img class="finale-mithu" src="assets/img/mithu_crown.webp" width="566" height="909" alt="" loading="lazy">
+    <h2 id="finale-title"><span class="t-plum">Your own reading,</span> <span class="t-rose">at 7:30 AM</span></h2>
+    <p>The Shaadi Parrot app sends your love horoscope every morning, from today’s Moon and your own nakshatra, and three people Mithu picked for you.</p>
+    <a class="play-badge" href="https://play.google.com/store/apps/details?id=com.shaadiparrot.app" target="_blank" rel="noopener">
+      <svg aria-hidden="true"><use href="#play"/></svg><span><small>Get it on</small>Google Play</span>
+    </a>
+  </div>
+</section>

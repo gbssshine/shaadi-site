@@ -1,0 +1,134 @@
+<!--{"title": "Kundli match by date of birth: free Guna Milan with your crush — Shaadi Parrot", "desc": "Free kundli matching by date of birth. Enter your birth date and your crush’s and get your Guna Milan score out of 36, all 8 kootas and the doshas. Then share it. The same Vedic maths as the Shaadi Parrot app.", "nav": "match", "og": "og-kundli-match.jpg", "scripts": ["astro-core.js", "tool-share.js", "kundli-match.js", "site.js"], "head": "<link rel=\"stylesheet\" href=\"assets/css/tools.css\">"}-->
+<!--hero-->
+<picture class="sky" aria-hidden="true">
+  <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
+  <img src="assets/img/hero-sky-m.webp" alt="" width="1080" height="1920">
+</picture>
+<div class="page-hero wrap tool-hero">
+  <div class="ph-copy">
+    <p class="tool-kicker"><svg aria-hidden="true"><use href="#heart"/></svg>Free · no sign-up</p>
+    <h1>Kundli match</h1>
+    <p class="lead">Your birth date and your crush’s. Mithu does the Guna Milan and gives your score out of 36 in two seconds.</p>
+    <ol class="tool-steps" aria-label="How it works">
+      <li><b>1</b>Your birth date</li>
+      <li><b>2</b>Your crush’s</li>
+      <li><b>3</b>Share your score</li>
+    </ol>
+    <img class="tool-mithu" src="assets/img/mithu_heart.webp" width="820" height="1221" alt="">
+  </div>
+
+  <form class="tool-card" data-match-form novalidate>
+    <div class="persons">
+      <fieldset class="person" data-person="a">
+        <legend class="sr">You</legend>
+        <div class="p-head">
+        <p class="p-title" aria-hidden="true">You</p>
+        <div class="seg" role="radiogroup" aria-label="You are a">
+          <input type="radio" id="a-f" name="a-g" value="female"><label for="a-f">Girl</label>
+          <input type="radio" id="a-m" name="a-g" value="male"><label for="a-m">Boy</label>
+        </div>
+        </div>
+        <input class="inp" name="a-name" maxlength="18" autocomplete="given-name" placeholder="Your name (optional)" aria-label="Your name (optional)">
+        <div class="field" data-dob>
+          <span class="flabel" id="a-dob">Birth date</span>
+          <div class="dob" role="group" aria-labelledby="a-dob">
+            <select name="a-d" aria-label="Day" data-day><option value="">Day</option></select>
+            <select name="a-mo" aria-label="Month" data-month><option value="">Month</option></select>
+            <select name="a-y" aria-label="Year" data-year><option value="">Year</option></select>
+          </div>
+          <p class="f-err" data-err hidden>Pick the day, month and year.</p>
+        </div>
+        <details class="time-toggle">
+          <summary>Add birth time <small>for an exact score</small></summary>
+          <input class="inp" type="time" name="a-t" aria-label="Your birth time, India time">
+        </details>
+      </fieldset>
+
+      <span class="vs" aria-hidden="true"><svg><use href="#heart"/></svg></span>
+
+      <fieldset class="person" data-person="b">
+        <legend class="sr">Your crush</legend>
+        <div class="p-head">
+        <p class="p-title" aria-hidden="true">Your crush</p>
+        <div class="seg" role="radiogroup" aria-label="Your crush is a">
+          <input type="radio" id="b-f" name="b-g" value="female"><label for="b-f">Girl</label>
+          <input type="radio" id="b-m" name="b-g" value="male"><label for="b-m">Boy</label>
+        </div>
+        </div>
+        <input class="inp" name="b-name" maxlength="18" autocomplete="off" placeholder="Their name (optional)" aria-label="Their name (optional)">
+        <div class="field" data-dob>
+          <span class="flabel" id="b-dob">Birth date</span>
+          <div class="dob" role="group" aria-labelledby="b-dob">
+            <select name="b-d" aria-label="Day" data-day><option value="">Day</option></select>
+            <select name="b-mo" aria-label="Month" data-month><option value="">Month</option></select>
+            <select name="b-y" aria-label="Year" data-year><option value="">Year</option></select>
+          </div>
+          <p class="f-err" data-err hidden>Pick the day, month and year.</p>
+        </div>
+        <details class="time-toggle">
+          <summary>Add birth time <small>for an exact score</small></summary>
+          <input class="inp" type="time" name="b-t" aria-label="Their birth time, India time">
+        </details>
+      </fieldset>
+    </div>
+    <button class="btn btn-big" type="submit">Check our match<svg aria-hidden="true"><use href="#heart"/></svg></button>
+    <p class="tool-note"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="9" rx="2.5" fill="currentColor"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="currentColor" stroke-width="2"/></svg>Nothing leaves your phone. Birth times are India time (IST).</p>
+    <noscript><p class="tool-note">Kundli match needs JavaScript turned on.</p></noscript>
+  </form>
+</div>
+<!--/hero-->
+
+<section class="result-sec" id="result" data-result hidden aria-live="polite"></section>
+
+<section class="sec explain-sec" aria-labelledby="how-title">
+  <div class="wrap explain-grid">
+    <div class="sec-head">
+      <h2 id="how-title">How Mithu reads your kundli</h2>
+      <p>Guna Milan, also called Ashtakoota, compares where the Moon stood when each of you was born: its sign (your rashi) and its nakshatra. Eight checks, called kootas, add up to 36 points.</p>
+      <p>18 is the usual minimum for a match, 25 and up is very good, and above 32 is rare. Mithu uses the sidereal zodiac with the Lahiri ayanamsa, like most Indian panchangs, and the same maths as the Shaadi Parrot app.</p>
+    </div>
+    <ul class="koota-table" aria-label="The 8 kootas">
+      <li><b>Varna</b><span>Work and ego</span><i>1</i></li>
+      <li><b>Vashya</b><span>Attraction</span><i>2</i></li>
+      <li><b>Tara</b><span>Luck and health</span><i>3</i></li>
+      <li><b>Yoni</b><span>Physical ease</span><i>4</i></li>
+      <li><b>Graha Maitri</b><span>How you think</span><i>5</i></li>
+      <li><b>Gana</b><span>Temperament</span><i>6</i></li>
+      <li><b>Bhakoot</b><span>Family and money</span><i>7</i></li>
+      <li><b>Nadi</b><span>Health and family</span><i>8</i></li>
+    </ul>
+  </div>
+</section>
+
+<section class="faq" aria-labelledby="faq-title">
+  <div class="wrap faq-wrap">
+    <h2 id="faq-title">Questions</h2>
+    <details><summary>Do I need the birth time?</summary><p>No. The Moon moves about 13° a day, so on some days it changes nakshatra. Without a time, Mithu reads the Moon at noon and also tells you the lowest and highest score the day allows. Add both birth times for the exact score.</p></details>
+    <details><summary>We scored under 18. Is that bad?</summary><p>Traditionally 18 is the line families look for, but plenty of happy couples score lower. A low score points to where you need more patience, not to a verdict. Read the kootas below your score to see which ones.</p></details>
+    <details><summary>What about Manglik dosha?</summary><p>Manglik needs Mars and the Lagna, which come from an exact birth time and place. The Shaadi Parrot app checks it in every fate reading, along with Nadi, Bhakoot and Gana dosha.</p></details>
+    <details><summary>Does anyone see what I type?</summary><p>No. Everything is worked out on your phone. Names and birth dates are not sent anywhere. Your own details are remembered on this phone only, so the next check is quicker.</p></details>
+    <details><summary>Is it the same as in the app?</summary><p>Yes. The site uses the same tables and rules as the Shaadi Parrot app’s Daily Fates, where Mithu checks Guna Milan for every person he picks for you.</p></details>
+  </div>
+</section>
+
+<section class="sec more-sec" aria-labelledby="more-title">
+  <div class="wrap">
+    <div class="sec-head center"><h2 id="more-title">More from Mithu</h2></div>
+<!--include:tools-tiles-->
+  </div>
+</section>
+
+<section class="finale" aria-labelledby="finale-title">
+  <picture class="sky" aria-hidden="true">
+    <source media="(min-width: 900px)" srcset="assets/img/hero-sky.webp">
+    <img src="assets/img/hero-sky-m.webp" alt="" width="1080" height="1920" loading="lazy">
+  </picture>
+  <div class="wrap finale-inner">
+    <img class="finale-mithu" src="assets/img/mithu_cards.webp" width="510" height="635" alt="" loading="lazy">
+    <h2 id="finale-title"><span class="t-plum">Matches whose stars</span> <span class="t-rose">already fit</span></h2>
+    <p>Every morning in Shaadi Parrot, Mithu picks three people for you and shows your Guna Milan with each of them before you say hi.</p>
+    <a class="play-badge" href="https://play.google.com/store/apps/details?id=com.shaadiparrot.app" target="_blank" rel="noopener">
+      <svg aria-hidden="true"><use href="#play"/></svg><span><small>Get it on</small>Google Play</span>
+    </a>
+  </div>
+</section>
