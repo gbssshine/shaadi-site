@@ -1,25 +1,25 @@
 # Shaadi Parrot website
 
-A static site for the Shaadi Parrot Android dating app. It has no server, no framework and no build step to view it: open `index.html` by double-clicking it. You need to be online for the Google fonts and the YouTube thumbnail.
+A static site for Shaadi Parrot, the Indian matrimony app for Android (with a parrot astrologer). It has no server, no framework and no build step to view it: open `index.html` by double-clicking it. You need to be online for the Google fonts and the YouTube thumbnail.
 
 ## Pages
 
 | File | What it is |
 |---|---|
-| `index.html` | Home: banner-style hero, the Daily Fates card demo, how it works, features, tests, tonight's Moon, safety, Parrot+, Ek Tarfa, FAQ |
-| `how-it-works.html` | A day with Mithu, inside a fate reading, profile, likes/crowns/boosts, explore |
+| `index.html` | Home: banner-style hero, the Today's rishtas card demo, how it works, features, tests, tonight's Moon, safety, Parrot+, Mithu's cartoons |
+| `how-it-works.html` | A day with Mithu, inside a rishta reading, the profile (own or a child's), interests/crowns/boosts, explore |
 | `tests.html` | Test hub: the two web tests and the full list of the app's 90 tests |
-| `kundli-match.html` | Free Kundli match (Guna Milan, 36 gunas) for you and your crush, with a share picture |
+| `kundli-match.html` | Free Kundli match (Guna Milan, 36 gunas) for any two birth dates, with a share picture |
 | `love-today.html` | Love luck today: hearts for all 12 rashis from today's Moon (the daily reels' rules) |
 | `moon-sign.html` | Find your rashi: Moon sign and nakshatra from a birth date |
 | `match/<score>.html`, `moon-sign/<nakshatra>.html` | Static pages behind shared tool results, so chat previews show the result |
 | `astrology.html` | Live Moon nakshatra, all 27 nakshatras, horoscope explainer, the Astrology Library |
-| `parrot-plus.html` | Free vs Parrot+, crowns and boosts, billing |
-| `safety.html` | Safety centre, tips, community guidelines (`#guidelines`), reporting |
+| `parrot-plus.html` | Free vs Parrot+ (money design 8.1a), readings, crowns and boosts, billing |
+| `safety.html` | Safety centre, tips, child safety standards (`#child-safety`), community guidelines (`#guidelines`), reporting |
 | `about.html` | Why a parrot, values, cast, the YouTube video, company |
-| `help.html` | FAQ and contact |
-| `privacy.html`, `terms.html`, `delete-account.html` | Legal pages (from the app's texts). Google Play needs `delete-account.html` |
-| `tests/love-bird.html` | "Which love bird are you?" (Parrot Tests sub-brand, no dating wording) |
+| `help.html` | FAQ and contact; `#remove-profile` = how someone without an account gets a profile of them removed |
+| `privacy.html`, `terms.html`, `delete-account.html` | Legal pages, ported from the app repo's canonical `docs/legal/privacy-1.0.8.md` and `terms-1.0.8.md` (same headings and words; the YouTube sections are site only). Google Play needs `delete-account.html` |
+| `tests/love-bird.html` | "Which love bird are you?" (Parrot Tests sub-brand) |
 | `tests/love-bird/<bird>.html` | One static page per result, so a shared link previews that bird |
 | `tests/<test_id>.html` | All 90 of the app's tests, one page each. 18 are listed on the site; the rest open from a link shared in the app (`?r=vh\|h\|m\|l\|vl\|u` shows the friend's result) |
 | `tests/texting-style.html` | Redirects to `communication_texting_style.html` |

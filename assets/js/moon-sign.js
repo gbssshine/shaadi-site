@@ -97,7 +97,7 @@
           (info.facts ? '<dl class="nak-facts">' + info.facts.map(function (f) { return "<div><dt>" + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>"; }).join("") + "</dl>" : "") +
           '<div class="next-tools">' +
             '<a class="next-tool" href="love-today.html#' + r[0].toLowerCase() + '"><img src="assets/img/astro/a_love.webp" width="160" height="160" alt=""><span><b>Love luck today for ' + r[0] + "</b><small>See your hearts for today</small></span></a>" +
-            '<a class="next-tool" href="kundli-match.html"><img src="assets/img/astro/a_kundli.webp" width="160" height="160" alt=""><span><b>Kundli match</b><small>Check your gunas with your crush</small></span></a>' +
+            '<a class="next-tool" href="kundli-match.html"><img src="assets/img/astro/a_kundli.webp" width="160" height="160" alt=""><span><b>Kundli match</b><small>Your gunas out of 36, free</small></span></a>' +
           "</div>" +
         "</div>" +
       "</div>";

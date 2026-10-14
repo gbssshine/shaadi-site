@@ -2,6 +2,7 @@
 
 python tools/mobile_qa.py            -> report of problems
 python tools/mobile_qa.py --shots    -> also one screenshot per block (screenshots/mob/)
+python tools/mobile_qa.py --shots --out DIR --pages a.html,b.html   -> screenshots elsewhere, only these pages
 
 Checks: horizontal overflow, elements sticking out of the screen (outside swipe rails),
 clipped text, tap targets under 40 px, text under 12 px, broken images, blocks taller than
@@ -56,8 +57,8 @@ CHECK = r"""(vw) => {
 }"""
 
 
-def main(shots):
-    out_dir = ROOT / "screenshots" / "mob"
+def main(shots, out=None, pages=None):
+    out_dir = pathlib.Path(out) if out else ROOT / "screenshots" / "mob"
     if shots:
         out_dir.mkdir(parents=True, exist_ok=True)
     problems = {}
@@ -68,7 +69,7 @@ def main(shots):
             pg = ctx.new_page()
             errs = []
             pg.on("pageerror", lambda e: errs.append(str(e)))
-            for page in PAGES:
+            for page in pages or PAGES:
                 pg.goto((ROOT / page).as_uri())
                 pg.wait_for_timeout(500)
                 # load lazy images
@@ -95,4 +96,6 @@ def main(shots):
 
 
 if __name__ == "__main__":
-    main("--shots" in sys.argv)
+    args = sys.argv[1:]
+    opt = lambda k: args[args.index(k) + 1] if k in args else None
+    main("--shots" in args, opt("--out"), opt("--pages").split(",") if opt("--pages") else None)

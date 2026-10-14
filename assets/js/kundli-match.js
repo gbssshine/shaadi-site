@@ -5,7 +5,8 @@
   var out = document.querySelector("[data-result]");
   if (!A || !form || !out) return;
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  var MAX_YEAR = 2008, MIN_YEAR = 1950;   // 18+ (the app is for adults)
+  // 18+ (the app is for adults): the year list stops at this year minus 18, and validDate checks the full date
+  var NOW = new Date(), MAX_YEAR = NOW.getFullYear() - 18, MIN_YEAR = 1950;
   var PLAY = "https://play.google.com/store/apps/details?id=com.shaadiparrot.app&referrer=" +
     encodeURIComponent("utm_source=website&utm_medium=kundli_match_result");
   var ME = "sp_me";
@@ -18,7 +19,7 @@
   form.querySelectorAll("[data-month]").forEach(function (s) { MONTHS.forEach(function (m, i) { s.appendChild(opt(i + 1, m)); }); });
   form.querySelectorAll("[data-year]").forEach(function (s) { for (var y = MAX_YEAR; y >= MIN_YEAR; y--) s.appendChild(opt(y, y)); });
 
-  // your crush's gender follows yours (opposite) until you pick it yourself
+  // the other person's gender follows yours (opposite) until you pick it yourself
   var bPicked = false;
   form.querySelectorAll('input[name="b-g"]').forEach(function (r) { r.addEventListener("change", function () { bPicked = true; }); });
   form.querySelectorAll('input[name="a-g"]').forEach(function (r) {
@@ -43,10 +44,12 @@
     if (!x.d || !x.mo || !x.y) return "Pick the day, month and year.";
     var dt = new Date(Date.UTC(x.y, x.mo - 1, x.d));
     if (dt.getUTCDate() !== x.d) return MONTHS[x.mo - 1] + " " + x.y + " has no day " + x.d + ".";
+    var adult = Date.UTC(NOW.getFullYear() - 18, NOW.getMonth(), NOW.getDate());
+    if (dt.getTime() > adult) return "This tool is for adults: born on or before " + NOW.getDate() + " " + MONTHS[NOW.getMonth()] + " " + (NOW.getFullYear() - 18) + ".";
     return "";
   }
 
-  // your own details are remembered on this phone only, so checking the next crush is one date away
+  // your own details are remembered on this phone only, so the next check is one date away
   try {
     var me = JSON.parse(localStorage.getItem(ME) || "null");
     if (me) {
@@ -59,11 +62,17 @@
     }
   } catch (e) {}
 
-  function band(s) {
-    if (s > 32) return { key: "rare", title: "Made in the stars", lines: ["A rare score. Even the parrot is blushing.", "Mithu is already humming the shehnai tune."] };
-    if (s >= 25) return { key: "great", title: "A very good match", lines: ["The stars like you two together. Now text first.", "Strong stars. The rest is chai and good timing."] };
-    if (s >= 18) return { key: "good", title: "A good match", lines: ["Above the usual 18. Real effort does the rest.", "Good stars and real work: that’s how love stories go."] };
-    return { key: "low", title: "Opposites attract?", lines: ["Under the usual 18. Plenty of happy couples score low: talk, don’t assume.", "The stars are shy here. Kindness can outscore any kundli."] };
+  // One band table with the app (monetization-viral 5.2.1) and Mithu's lines (5.2.2), picked by round(total*2) % count.
+  // Below 18 there is no verdict word on anything that is shared.
+  function band(s, r) {
+    if (r && r.totalMin < 18 && r.totalMax >= 18)
+      return { key: s >= 18 ? "good" : "low", title: s >= 18 ? "Probably a match" : "Could go either way",
+               lines: ["Without birth times Mithu sees a range. Add both times for the exact score."] };
+    if (s >= 32) return { key: "rare", title: "Excellent match", lines: ["A score this rare makes even a parrot blush.", "Mithu checked twice. The stars really like this pair."] };
+    if (s >= 28) return { key: "rare", title: "Excellent match", lines: ["The stars said yes before anyone else did. Now let the families talk.", "Very few pairs score this high. Mithu is doing a small happy dance."] };
+    if (s >= 24) return { key: "great", title: "Very good match", lines: ["Strong stars. The rest is patience, chai and good timing.", "The kundlis get along. Now it’s the people’s turn."] };
+    if (s >= 18) return { key: "good", title: "Good match", lines: ["Above the traditional 18 gunas. Real effort does the rest.", "A good start. Happy marriages are made by people, not printed in a chart."] };
+    return { key: "low", title: "", lines: ["Below 18 gunas? Plenty of happy couples are. Talk, don’t assume.", "The stars are shy here. Kindness can outscore any kundli."] };
   }
   function num(x) { return String(x).replace(".5", "½").replace(/^0½$/, "½"); }
   function slug(x) { return String(x).replace(".", "-"); }
@@ -93,13 +102,12 @@
   var last = null;
 
   function render(r, a, b) {
-    var bd = band(r.total), line = bd.lines[Math.round(r.total * 2) % 2];
-    var aName = a.name || "You", bName = b.name || "Your crush";
-    var names = a.name && b.name ? esc(a.name) + ' <svg aria-hidden="true"><use href="#heart"/></svg> ' + esc(b.name) : "Your kundli match";
     var range = r.precision === "date" && r.totalMin !== r.totalMax;
+    var bd = band(r.total, range ? r : null), line = bd.lines[Math.round(r.total * 2) % bd.lines.length];
+    var aName = a.name || "You", bName = b.name || "Them";
+    var names = a.name && b.name ? esc(a.name) + ' <svg aria-hidden="true"><use href="#heart"/></svg> ' + esc(b.name) : "Your kundli match";
     var url = S.SITE + "/match/" + slug(r.total) + ".html";
-    var who = a.name && b.name ? a.name + " + " + b.name + " got " : "We got ";
-    var text = who + num(r.total) + " out of 36 gunas in Kundli Match 💞 Check yours with your crush 🦜\n" + url;
+    var text = "Our kundli match: " + num(r.total) + " of 36 gunas 🦜 Check yours, free: " + url;
     last = { r: r, a: a, b: b, band: bd, line: line, text: text, blob: null };
 
     out.innerHTML =
@@ -107,7 +115,7 @@
         '<div class="score-card band-' + bd.key + '">' +
           '<p class="score-names">' + names + "</p>" +
           '<div class="ring" style="--p:' + (r.total / 36).toFixed(4) + '"><div><b>' + num(r.total) + "</b><small>of 36 gunas</small></div></div>" +
-          '<h2 class="score-band" tabindex="-1">' + bd.title + "</h2>" +
+          '<h2 class="score-band" tabindex="-1">' + (bd.title || "Kundli match") + "</h2>" +
           '<p class="mithu-says"><img src="assets/img/logo.webp" width="40" height="40" alt=""><span>' + esc(line) + "</span></p>" +
           (range ? '<p class="range-note">Without birth times your score can be anywhere from <b>' + num(r.totalMin) + "</b> to <b>" + num(r.totalMax) +
             '</b>, depending on the hour. <button class="link-btn" type="button" data-add-time>Add birth times</button></p>' : "") +
@@ -125,7 +133,7 @@
           '<h3 class="res-h">Doshas</h3>' +
           '<ul class="doshas">' + r.doshas.map(doshaRow).join("") + "</ul>" +
           '<aside class="app-cta"><img src="assets/img/mithu_cards.webp" width="510" height="635" alt="">' +
-            "<div><b>Want people whose stars already fit?</b><p>Every morning in Shaadi Parrot, Mithu picks three people for you and shows your Guna Milan with each one.</p>" +
+            "<div><b>Looking for a rishta whose stars fit?</b><p>In Shaadi Parrot every rishta’s profile shows your kundli match, and Mithu picks up to 3 verified rishtas a day, each with 18+ gunas.</p>" +
             '<a class="btn btn-small" href="' + PLAY + '" target="_blank" rel="noopener">Get the app, free</a></div></aside>' +
         "</div>" +
       "</div>";
@@ -187,8 +195,9 @@
         c.font = '800 150px "Baloo 2"'; c.fillText(num(L.r.total), cx, cy + 40);
         c.font = '700 34px "Plus Jakarta Sans"'; c.fillStyle = k.PLUM2; c.fillText("of 36 gunas", cx, cy + 92);
         // band and Mithu's line
-        c.fillStyle = k.ROSE; c.font = '800 ' + k.fit(c, L.band.title, '800 {s}px "Baloo 2"', 78, 860) + 'px "Baloo 2"';
-        c.fillText(L.band.title, cx, 868);
+        var word = L.band.title || "Kundli match";
+        c.fillStyle = k.ROSE; c.font = '800 ' + k.fit(c, word, '800 {s}px "Baloo 2"', 78, 860) + 'px "Baloo 2"';
+        c.fillText(word, cx, 868);
         c.fillStyle = k.PLUM; c.font = '600 34px "Plus Jakarta Sans"';
         k.wrap(c, L.line, 800).slice(0, 2).forEach(function (ln, i) { c.fillText(ln, cx, 936 + i * 46); });
         // three koota chips with the best ratios

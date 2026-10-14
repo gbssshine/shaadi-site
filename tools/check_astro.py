@@ -13,6 +13,9 @@ import sys
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPOS = os.path.dirname(HERE)
+if not os.path.isdir(os.path.join(REPOS, "shaadiparrot-face-verification")):   # a git worktree: use the main checkout's siblings
+    common = subprocess.run(["git", "-C", HERE, "rev-parse", "--git-common-dir"], capture_output=True, text=True).stdout.strip()
+    REPOS = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(HERE, common))))
 sys.path.insert(0, os.path.join(REPOS, "shaadiparrot-face-verification"))
 sys.path.insert(0, os.path.join(REPOS, "shaadi-parrot-cartoon", "tools"))
 sys.stdout.reconfigure(encoding="utf-8")

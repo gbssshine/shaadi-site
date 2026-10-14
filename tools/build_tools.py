@@ -31,14 +31,14 @@ RASHIS = [("Mesha", "Aries"), ("Vrishabha", "Taurus"), ("Mithuna", "Gemini"), ("
           ("Tula", "Libra"), ("Vrishchika", "Scorpio"), ("Dhanu", "Sagittarius"), ("Makara", "Capricorn"), ("Kumbha", "Aquarius"), ("Meena", "Pisces")]
 
 
-def band(s):   # the same bands as assets/js/kundli-match.js
-    if s > 32:
-        return "Made in the stars"
-    if s >= 25:
-        return "A very good match"
+def band(s):   # the same bands as assets/js/kundli-match.js (monetization-viral 5.2.1); no verdict word below 18 on shares
+    if s >= 28:
+        return "Excellent match"
+    if s >= 24:
+        return "Very good match"
     if s >= 18:
-        return "A good match"
-    return "Opposites attract?"
+        return "Good match"
+    return ""
 
 
 def num(s):
@@ -72,13 +72,13 @@ def ring(c, cx, cy, r, frac, width=34, label=None, sub=None):
 
 
 def band_line(s):
-    if s > 32:
-        return "A rare score: above 32 of 36."
-    if s >= 25:
-        return "25 and up is a very good match."
+    if s >= 28:
+        return "28 and up is rare: an excellent match."
+    if s >= 24:
+        return "24 and up is a very good match."
     if s >= 18:
-        return "Above 18, the usual minimum for a match."
-    return "Under the usual 18. Plenty of couples still shine."
+        return "Above 18, the traditional minimum."
+    return "Below 18? Plenty of happy couples are."
 
 
 def polaroid(person, angle):
@@ -104,11 +104,11 @@ def og_match(score):
     _hearts(c)
     _chip(d, (70, 58), "Kundli match · Guna Milan", font("bold", 26))
     y = _lines(c, 70, 126, ["Our score:"], font("bold", 40), fill=PLUM, gap=10)
-    size, lines = _fit(d, band(score), "brand", 600, [100, 90, 80, 70], 2)
+    size, lines = _fit(d, band(score) or "Kundli match", "brand", 600, [100, 90, 80, 70], 2)
     y = _lines(c, 66, y + 12, lines, font("brand", size), gap=10)
     y = _lines(c, 70, y + 16, [f"{num(score)} of 36 gunas"], font("bold", 36), fill=PLUM, gap=8)
     _lines(c, 70, y + 8, [band_line(score)], font("semi", 28), fill=INK2)
-    _button(c, (70, 520), "Check yours with your crush")
+    _button(c, (70, 520), "Check your kundli match, free")
     return c.convert("RGB")
 
 
@@ -212,7 +212,7 @@ PAGE = """<!doctype html>
 <main class="shared-main">
 {body}
 </main>
-<footer class="shared-foot"><p>Free tools by <a href="../index.html">Shaadi Parrot</a>, the Indian dating app with a parrot astrologer · <a href="../privacy.html">Privacy</a></p></footer>
+<footer class="shared-foot"><p>Free tools by <a href="../index.html">Shaadi Parrot</a>, the Indian matrimony app with a parrot astrologer · <a href="../privacy.html">Privacy</a></p></footer>
 </body>
 </html>
 """
@@ -221,7 +221,7 @@ MATCH_BODY = """  <section class="score-card band-{key}">
     <p class="kicker">Their kundli match</p>
     <div class="ring" style="--p:{p}"><div><b>{num}</b><small>of 36 gunas</small></div></div>
     <h1 class="score-band">{band}</h1>
-    <p class="range-note">18 is the usual minimum for a match, 25 and up is very good.</p>
+    <p class="range-note">18 gunas is the traditional minimum, 24 and up is very good, 28 and up is excellent.</p>
     <a class="btn btn-big" href="../kundli-match.html">Check your own match</a>
     <p class="tool-note">Two birth dates · 2 seconds · nothing leaves your phone</p>
   </section>
@@ -230,7 +230,7 @@ MATCH_BODY = """  <section class="score-card band-{key}">
     <a class="next-tool" href="../moon-sign.html"><img src="../assets/img/astro/a_zodiac.webp" width="160" height="160" alt=""><span><b>Find your rashi</b><small>Moon sign and nakshatra</small></span></a>
   </nav>
   <aside class="app-cta"><img src="../assets/img/mithu_cards.webp" width="510" height="635" alt="">
-    <div><b>Want people whose stars already fit?</b><p>Every morning in Shaadi Parrot, Mithu picks three people for you and shows your Guna Milan with each one.</p>
+    <div><b>Looking for a rishta whose stars fit?</b><p>In Shaadi Parrot every rishta’s profile shows your kundli match, and Mithu picks up to 3 verified rishtas a day, each with 18+ gunas.</p>
     <a class="btn btn-small" href="{play}" target="_blank" rel="noopener">Get the app, free</a></div></aside>"""
 
 NAK_BODY = """  <section class="score-card rashi-card">
@@ -245,7 +245,7 @@ NAK_BODY = """  <section class="score-card rashi-card">
     <p class="tool-note">Your birth date · 10 seconds · nothing leaves your phone</p>
   </section>
   <nav class="next-tools" aria-label="More free tools">
-    <a class="next-tool" href="../kundli-match.html"><img src="../assets/img/astro/a_kundli.webp" width="160" height="160" alt=""><span><b>Kundli match</b><small>Your gunas with your crush</small></span></a>
+    <a class="next-tool" href="../kundli-match.html"><img src="../assets/img/astro/a_kundli.webp" width="160" height="160" alt=""><span><b>Kundli match</b><small>Your gunas out of 36, free</small></span></a>
     <a class="next-tool" href="../love-today.html"><img src="../assets/img/astro/a_love.webp" width="160" height="160" alt=""><span><b>Love luck today</b><small>Hearts for all 12 rashis</small></span></a>
   </nav>"""
 
@@ -258,7 +258,7 @@ def nak_data():
 def main():
     os.makedirs(SHARE, exist_ok=True)
     e = lambda s: html.escape(s, quote=True)
-    og_tool("Kundli match", "Your birth date and your crush’s. Your score out of 36 gunas.", "Check yours in 2 seconds",
+    og_tool("Kundli match", "Your birth date and theirs. Your score out of 36 gunas.", "Check yours in 2 seconds",
             "astro/a_kundli.webp", "mithu_heart.webp").save(os.path.join(SHARE, "og-kundli-match.jpg"), quality=86, optimize=True)
     og_tool("Find your rashi", "Your Moon sign and nakshatra from your birth date.", "Find my rashi, free",
             "astro/a_zodiac.webp", "mithu_telescope.webp").save(os.path.join(SHARE, "og-moon-sign.jpg"), quality=86, optimize=True)
@@ -269,11 +269,13 @@ def main():
     scores = [k / 2 for k in range(0, 73)]
     for s in scores:
         og_match(s).save(os.path.join(SHARE, f"og-match-{slug(s)}.jpg"), quality=84, optimize=True)
-        key = "rare" if s > 32 else "great" if s >= 25 else "good" if s >= 18 else "low"
-        body = MATCH_BODY.format(key=key, p=f"{s / 36:.4f}", num=num(s), band=band(s),
+        key = "rare" if s >= 28 else "great" if s >= 24 else "good" if s >= 18 else "low"
+        word = band(s)
+        body = MATCH_BODY.format(key=key, p=f"{s / 36:.4f}", num=num(s), band=word or "Kundli match",
                                  play=PLAY + "&amp;referrer=utm_source%3Dwebsite%26utm_medium%3Dshared_match")
-        page = PAGE.format(title=f"{num(s)} of 36 gunas: {band(s)} — Kundli match", ogtitle=f"Our kundli match: {num(s)} of 36 gunas 💞",
-                           desc=f"{band(s)}: {num(s)} of 36 gunas in Guna Milan. Check your own kundli match with your crush, free.",
+        page = PAGE.format(title=f"{num(s)} of 36 gunas: {word} — Kundli match" if word else f"{num(s)} of 36 gunas — Kundli match",
+                           ogtitle=f"Our kundli match: {num(s)} of 36 gunas 🦜",
+                           desc=(f"{word}: " if word else "") + f"{num(s)} of 36 gunas in Guna Milan. Check your own kundli match, free.",
                            site=SITE, path=f"match/{slug(s)}.html", og=f"og-match-{slug(s)}.jpg", body=body)
         with open(os.path.join(HERE, "match", f"{slug(s)}.html"), "w", encoding="utf-8", newline="\n") as f:
             f.write(page)

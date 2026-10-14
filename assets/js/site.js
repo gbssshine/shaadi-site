@@ -1,4 +1,4 @@
-/* Shaadi Parrot site: menu, mobile dock, Daily Fates demo, YouTube click-to-play. */
+/* Shaadi Parrot site: menu, mobile dock, Today's rishtas demo, YouTube click-to-play. */
 (function () {
   var root = document.documentElement.getAttribute("data-root") || "";
 
@@ -32,17 +32,17 @@
     dockIO.observe(top);
   }
 
-  // ---------- Daily Fates demo ----------
+  // ---------- Today's rishtas demo ----------
   var FATES = [
-    { name: "Meera, 27", city: "Pune", img: "meera", score: 94,
-      bars: [["Compatibility", 92], ["Relationship outlook", 95], ["Fate alignment", 94]],
-      verdict: "She plans the trip, you pick the playlist. Mithu approves. Say hi before lunch." },
-    { name: "Kabir, 28", city: "Bengaluru", img: "kabir", score: 91,
-      bars: [["Compatibility", 90], ["Relationship outlook", 88], ["Fate alignment", 93]],
-      verdict: "He cooks, he calls his mother, and he laughs at your jokes. The parrot has spoken." },
-    { name: "Ananya, 25", city: "Delhi", img: "ananya", score: 96,
-      bars: [["Compatibility", 97], ["Relationship outlook", 94], ["Fate alignment", 96]],
-      verdict: "Same favourite song, same chai order. That’s not a coincidence, that’s a sign." }
+    { name: "Meera, 27", city: "Pune", img: "meera", score: 28,
+      bars: [["Kundli match", 78], ["Life plans", 92], ["Family values", 95]],
+      verdict: "She plans the trip, you pick the music, and both families take chai at five. Mithu approves." },
+    { name: "Kabir, 28", city: "Bengaluru", img: "kabir", score: 26,
+      bars: [["Kundli match", 72], ["Life plans", 88], ["Family values", 93]],
+      verdict: "He cooks, he calls his mother, and the kundlis get along. The parrot has spoken." },
+    { name: "Ananya, 25", city: "Delhi", img: "ananya", score: 31,
+      bars: [["Kundli match", 86], ["Life plans", 94], ["Family values", 96]],
+      verdict: "Same city plans, same chai order, 31 gunas. That’s not a coincidence, that’s a rishta." }
   ];
   var LATER = ["Opens tomorrow", "Opens in 2 days"];
 
@@ -68,16 +68,16 @@
       cards.forEach(function (c, j) {
         if (j === i) {
           c.classList.add("open");
-          c.setAttribute("aria-label", FATES[j].name + ", today’s fate");
+          c.setAttribute("aria-label", FATES[j].name + ", today’s rishta");
           c.querySelector(".fate-note").textContent = FATES[j].city;
         } else {
           c.classList.add("locked");
           c.querySelector(".fate-note").textContent = LATER[later++];
-          c.setAttribute("aria-label", "Locked fate card. " + c.querySelector(".fate-note").textContent);
+          c.setAttribute("aria-label", "Sealed rishta card. " + c.querySelector(".fate-note").textContent);
         }
       });
       var f = FATES[i];
-      reading.querySelector("[data-r-score]").textContent = f.score + "%";
+      reading.querySelector("[data-r-score]").textContent = f.score + "/36";
       reading.querySelector("[data-r-bars]").innerHTML = f.bars.map(function (b) {
         return "<li>" + b[0] + '<span><i style="width:' + b[1] + '%"></i></span><em>' + b[1] + "</em></li>";
       }).join("");
@@ -98,7 +98,7 @@
       cards.forEach(function (c, j) {
         c.classList.remove("open", "locked", "nudge");
         c.querySelector(".fate-note").textContent = "";
-        c.setAttribute("aria-label", "Open fate card " + (j + 1));
+        c.setAttribute("aria-label", "Open rishta card " + (j + 1));
       });
       cards[0].focus();
     });
